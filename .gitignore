@@ -61,6 +61,8 @@ artifacts/
 StyleCopReport.xml
 
 # Files built by Visual Studio
+*.suo
+*.db
 *_i.c
 *_p.c
 *_h.h
@@ -339,3 +341,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+.vs/Cootkri/v16/.suo
+.vs/Cootkri/v16/Browse.VC.db
