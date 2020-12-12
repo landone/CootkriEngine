@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Evt_Keyboard.h"
 
 #include <SDL/SDL.h>
 #undef main
@@ -114,8 +115,15 @@ void Display::update() {
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 
-		if (e.type == SDL_QUIT) {
+		switch (e.type) {
+		case SDL_QUIT:
 			close();
+			return;
+		case SDL_KEYDOWN:
+			Evt_Keyboard::sendKeyPress(Evt_Keyboard::SDL_to_Key((int)e.key.keysym.sym));
+			break;
+		case SDL_KEYUP:
+			Evt_Keyboard::sendKeyRelease(Evt_Keyboard::SDL_to_Key((int)e.key.keysym.sym));
 			break;
 		}
 
