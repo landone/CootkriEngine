@@ -13,27 +13,33 @@ enum class KEY {
 	MAX_KEYS
 };
 
-class Evt_Keyboard {
+//Functions for sending keyboard events
+class KeyboardEvent {
 public:
 
+	//Send key press event to display listeners
 	static void sendKeyPress(KEY);
+	//Send key release event to display listeners
 	static void sendKeyRelease(KEY);
-
+	//Convert SDL keycode to KEY enum
 	static KEY SDL_to_Key(int);
 
 };
 
-class Keyboard_Listener {
+//
+class KeyboardListener {
 public:
-	Keyboard_Listener();
-	~Keyboard_Listener();
+	KeyboardListener();
+	~KeyboardListener();
 protected:
+	//Is key currently pressed
 	static bool isKeyDown(KEY);
+	//Convert key enum to string representation
 	static std::string keyToString(KEY);
-private:
-
-	friend Evt_Keyboard;
+	friend KeyboardEvent;
+	//Called when a key is pressed
 	virtual void onKeyPress(KEY) {};
+	//Called when a key is released
 	virtual void onKeyRelease(KEY) {};
 
 };

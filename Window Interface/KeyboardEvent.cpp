@@ -1,11 +1,11 @@
-#include "Evt_Keyboard.h"
+#include "KeyboardEvent.h"
 
 #include <map>
 #include <list>
 #include <algorithm>
 #include <SDL/SDL_keycode.h>
 
-static std::list<Keyboard_Listener*> listeners;
+static std::list<KeyboardListener*> listeners;
 static bool keyDown[(int)KEY::MAX_KEYS] = { false };
 
 static std::map<SDL_Keycode, KEY> KEYMAP;
@@ -20,40 +20,40 @@ static const std::string CHARMAP[(int)KEY::MAX_KEYS] = {
 	"INSERT", "HOME", "PAGEUP", "DELETE", "END", "PAGEDOWN"
 };
 
-Keyboard_Listener::Keyboard_Listener() {
+KeyboardListener::KeyboardListener() {
 
 	listeners.push_back(this);
 
 }
 
-Keyboard_Listener::~Keyboard_Listener() {
+KeyboardListener::~KeyboardListener() {
 
 	listeners.erase(std::remove(listeners.begin(), listeners.end(), this), listeners.end());
 
 }
 
-bool Keyboard_Listener::isKeyDown(KEY k) {
+bool KeyboardListener::isKeyDown(KEY k) {
 
 	return keyDown[(int)k];
 
 }
 
-void Evt_Keyboard::sendKeyPress(KEY k) {
+void KeyboardEvent::sendKeyPress(KEY k) {
 
 	keyDown[(int)k] = true;
 
-	std::list<Keyboard_Listener*>::iterator it;
+	std::list<KeyboardListener*>::iterator it;
 	for (it = listeners.begin(); it != listeners.end(); it++) {
 		(*it)->onKeyPress(k);
 	}
 
 }
 
-void Evt_Keyboard::sendKeyRelease(KEY k) {
+void KeyboardEvent::sendKeyRelease(KEY k) {
 
 	keyDown[(int)k] = false;
 
-	std::list<Keyboard_Listener*>::iterator it;
+	std::list<KeyboardListener*>::iterator it;
 	for (it = listeners.begin(); it != listeners.end(); it++) {
 		(*it)->onKeyRelease(k);
 	}
@@ -153,7 +153,7 @@ void populateKeyMap() {
 
 }
 
-KEY Evt_Keyboard::SDL_to_Key(int sdl) {
+KEY KeyboardEvent::SDL_to_Key(int sdl) {
 
 	if (KEYMAP.empty()) {
 		populateKeyMap();
@@ -163,7 +163,7 @@ KEY Evt_Keyboard::SDL_to_Key(int sdl) {
 
 }
 
-std::string Keyboard_Listener::keyToString(KEY k) {
+std::string KeyboardListener::keyToString(KEY k) {
 
 	return CHARMAP[(int)k];
 
