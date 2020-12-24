@@ -1,5 +1,5 @@
 #include "Display.h"
-#include "KeyboardEvent.h"
+#include "KeyboardListener.h"
 
 #include <SDL/SDL.h>
 #undef main
@@ -18,6 +18,7 @@ static bool sdl_init = false;
 static bool glew_init = false;
 //Map window ID to display
 static std::map<Uint32, Display*> windowMap;
+static Display* mainDisplay = nullptr;
 
 Display::Display() : Display(DEFAULT_SIZE[0], DEFAULT_SIZE[1], DEFAULT_NAME) {}
 
@@ -69,10 +70,39 @@ Display::Display(int width, int height, const std::string& title) {
 
 	windowMap[SDL_GetWindowID((SDL_Window*)window)] = this;
 
+	if (!mainDisplay) {
+		mainDisplay = this;
+	}
+
+}
+
+Display::~Display() {
+
+	if (mainDisplay == this) {
+		mainDisplay = nullptr;
+		if (windowMap.begin() != windowMap.end()) {
+			windowMap.begin()->second->makeMain();
+		}
+	}
+
+	std::list<void*>::iterator it = keyboardListeners.begin();
+	for (; it != keyboardListeners.end(); ++it) {
+		((KeyboardListener*)(*it))->disp = nullptr;
+	}
+	keyboardListeners.clear();
+
 }
 
 void Display::makeCurrent() {
 	MAKE_CURRENT();
+}
+
+void Display::makeMain() {
+	mainDisplay = this;
+}
+
+Display* Display::getMain() {
+	return mainDisplay;
 }
 
 void Display::close() {
@@ -154,25 +184,38 @@ void Display::poll() {
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
 
+		std::map<Uint32, Display*>::iterator it = windowMap.find(e.window.windowID);
+		if (it == windowMap.end()) {
+			continue;
+		}
+		Display& disp = *(it->second);
+
 		switch (e.type) {
 		case SDL_WINDOWEVENT: {
-			std::map<Uint32, Display*>::iterator it = windowMap.find(e.window.windowID);
-			if (it == windowMap.end()) {
-				continue;
-			}
-			Display& disp = *(it->second);
 			switch (e.window.event) {
 			case SDL_WINDOWEVENT_CLOSE:
 				disp.close();
 			}
 			break;
 		}
-		case SDL_KEYDOWN:
-			KeyboardEvent::sendKeyPress(KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym));
+		case SDL_KEYDOWN: {
+			KEY k = KeyboardListener::SDL_to_Key((int)e.key.keysym.sym);
+			KeyboardListener::sendKeyPress(k);
+			std::list<void*>::iterator it = disp.keyboardListeners.begin();
+			for (; it != disp.keyboardListeners.end(); ++it) {
+				((KeyboardListener*)(*it))->onKeyPress(k);
+			}
 			break;
-		case SDL_KEYUP:
-			KeyboardEvent::sendKeyRelease(KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym));
+		}
+		case SDL_KEYUP: {
+			KEY k = KeyboardListener::SDL_to_Key((int)e.key.keysym.sym);
+			KeyboardListener::sendKeyRelease(k);
+			std::list<void*>::iterator it = disp.keyboardListeners.begin();
+			for (; it != disp.keyboardListeners.end(); ++it) {
+				((KeyboardListener*)(*it))->onKeyRelease(k);
+			}
 			break;
+		}
 		}
 
 	}

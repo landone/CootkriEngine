@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 class Display {
 public:
 
 	Display();
+	~Display();
 	Display(int width, int height, const std::string& title);
 	Display(int width, int height);
 	Display(const std::string& title);
@@ -37,13 +39,19 @@ public:
 	void relativeCursor(bool);
 	//Makes display current GL recipient
 	void makeCurrent();
+	//Set as main display
+	void makeMain();
 
 	//Is display currently open
 	bool isOpen();
+	//Retrieve main display
+	static Display* getMain();
 
 private:
-
+	
+	friend class KeyboardListener;
 	void* glContext = nullptr;
 	void* window = nullptr;
+	std::list<void*> keyboardListeners;
 
 };

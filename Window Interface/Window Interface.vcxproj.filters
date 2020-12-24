@@ -16,7 +16,7 @@
     <ClCompile Include="Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardEvent.cpp">
+    <ClCompile Include="KeyboardListener.cpp">
       <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
@@ -24,7 +24,7 @@
     <ClInclude Include="Display.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardEvent.h">
+    <ClInclude Include="KeyboardListener.h">
       <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>

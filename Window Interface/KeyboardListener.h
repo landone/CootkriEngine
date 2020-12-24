@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Display.h"
+
 #include <string>
 
 enum class KEY {
@@ -13,9 +15,12 @@ enum class KEY {
 	MAX_KEYS
 };
 
-//Functions for sending keyboard events
-class KeyboardEvent {
+//Display listener for keyboard input
+class KeyboardListener {
 public:
+
+	KeyboardListener(Display* disp = nullptr);
+	~KeyboardListener();
 
 	//Send key press event to display listeners
 	static void sendKeyPress(KEY);
@@ -24,22 +29,19 @@ public:
 	//Convert SDL keycode to KEY enum
 	static KEY SDL_to_Key(int);
 
-};
-
-//
-class KeyboardListener {
-public:
-	KeyboardListener();
-	~KeyboardListener();
 protected:
+	friend Display;
 	//Is key currently pressed
 	static bool isKeyDown(KEY);
 	//Convert key enum to string representation
 	static std::string keyToString(KEY);
-	friend KeyboardEvent;
 	//Called when a key is pressed
 	virtual void onKeyPress(KEY) {};
 	//Called when a key is released
 	virtual void onKeyRelease(KEY) {};
-
+private:
+	Display* disp = nullptr;
+	void removeListener();
+	//Null sets to main display
+	void setDisplay(Display*);
 };
