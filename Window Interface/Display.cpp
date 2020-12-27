@@ -195,14 +195,20 @@ void Display::poll() {
 		case SDL_KEYDOWN: {
 
 			KEY k = KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym);
-			KeyboardEvent evt(k, true);
-			disp.sendEvent(&evt);
+			if (!KeyboardEvent::isKeyDown(k)) {
+				KeyboardEvent::noteKey(k, true);
+				KeyboardEvent evt(k, true);
+				disp.sendEvent(&evt);
+			}
 			break;
 		}
 		case SDL_KEYUP: {
 			KEY k = KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym);
-			KeyboardEvent evt(k, false);
-			disp.sendEvent(&evt);
+			if (KeyboardEvent::isKeyDown(k)) {
+				KeyboardEvent::noteKey(k, false);
+				KeyboardEvent evt(k, false);
+				disp.sendEvent(&evt);
+			}
 			break;
 		}
 		}

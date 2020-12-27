@@ -8,8 +8,10 @@ public:
 	}
 private:
 	void onEvent(Event* e) override {
-		KEY k = ((KeyboardEvent*)e)->key;
-		printf("%s", KeyboardEvent::keyToString(k).c_str());
+		KeyboardEvent& ke = *((KeyboardEvent*)e);
+		if (ke.press) {
+			printf("%s", KeyboardEvent::keyToString(ke.key).c_str());
+		}
 	}
 };
 
@@ -34,10 +36,6 @@ int main() {
 		}
 		Display::poll();
 
-	}
-
-	if (popup.isOpen()) {
-		popup.close();
 	}
 
 	Display::quit();

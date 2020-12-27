@@ -28,15 +28,9 @@ bool KeyboardEvent::isKeyDown(KEY k) {
 
 }
 
-void KeyboardEvent::sendKeyPress(KEY k) {
+void KeyboardEvent::noteKey(KEY k, bool p) {
 
-	keyDown[(int)k] = true;
-
-}
-
-void KeyboardEvent::sendKeyRelease(KEY k) {
-
-	keyDown[(int)k] = false;
+	keyDown[(int)k] = p;
 
 }
 
