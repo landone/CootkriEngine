@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Event.h"
+
 #include <string>
 #include <list>
 
-class Display {
+class Display : public EventManager {
 public:
 
 	Display();
@@ -48,10 +50,8 @@ public:
 	static Display* getMain();
 
 private:
-	
-	friend class KeyboardListener;
+
 	void* glContext = nullptr;
 	void* window = nullptr;
-	std::list<void*> keyboardListeners;
 
 };

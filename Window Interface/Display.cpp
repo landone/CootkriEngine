@@ -1,5 +1,5 @@
 #include "Display.h"
-#include "KeyboardListener.h"
+#include "KeyboardEvent.h"
 
 #include <SDL/SDL.h>
 #undef main
@@ -84,12 +84,6 @@ Display::~Display() {
 			windowMap.begin()->second->makeMain();
 		}
 	}
-
-	std::list<void*>::iterator it = keyboardListeners.begin();
-	for (; it != keyboardListeners.end(); ++it) {
-		((KeyboardListener*)(*it))->disp = nullptr;
-	}
-	keyboardListeners.clear();
 
 }
 
@@ -199,21 +193,16 @@ void Display::poll() {
 			break;
 		}
 		case SDL_KEYDOWN: {
-			KEY k = KeyboardListener::SDL_to_Key((int)e.key.keysym.sym);
-			KeyboardListener::sendKeyPress(k);
-			std::list<void*>::iterator it = disp.keyboardListeners.begin();
-			for (; it != disp.keyboardListeners.end(); ++it) {
-				((KeyboardListener*)(*it))->onKeyPress(k);
-			}
+
+			KEY k = KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym);
+			KeyboardEvent evt(k, true);
+			disp.sendEvent(&evt);
 			break;
 		}
 		case SDL_KEYUP: {
-			KEY k = KeyboardListener::SDL_to_Key((int)e.key.keysym.sym);
-			KeyboardListener::sendKeyRelease(k);
-			std::list<void*>::iterator it = disp.keyboardListeners.begin();
-			for (; it != disp.keyboardListeners.end(); ++it) {
-				((KeyboardListener*)(*it))->onKeyRelease(k);
-			}
+			KEY k = KeyboardEvent::SDL_to_Key((int)e.key.keysym.sym);
+			KeyboardEvent evt(k, false);
+			disp.sendEvent(&evt);
 			break;
 		}
 		}

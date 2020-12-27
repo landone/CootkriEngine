@@ -16,7 +16,10 @@
     <ClCompile Include="Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardListener.cpp">
+    <ClCompile Include="Event.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
@@ -24,7 +27,13 @@
     <ClInclude Include="Display.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardListener.h">
+    <ClInclude Include="Event.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventType.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>

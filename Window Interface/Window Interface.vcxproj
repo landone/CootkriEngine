@@ -143,12 +143,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Display.cpp" />
-    <ClCompile Include="KeyboardListener.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="KeyboardEvent.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h" />
-    <ClInclude Include="KeyboardListener.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventType.h" />
+    <ClInclude Include="KeyboardEvent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
