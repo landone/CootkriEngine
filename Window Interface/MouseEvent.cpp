@@ -1,6 +1,6 @@
 #include "MouseEvent.h"
 
-MouseMotionEvent::MouseMotionEvent(int x, int y, int xr, int yr) : Event(EVENTTYPE::MOUSEMOTION) {
+MouseMotionEvent::MouseMotionEvent(int x, int y, int xr, int yr) : Event(EVENTTYPE::MOUSE_MOTION) {
 
 	pos[0] = x;
 	pos[1] = y;
@@ -9,7 +9,7 @@ MouseMotionEvent::MouseMotionEvent(int x, int y, int xr, int yr) : Event(EVENTTY
 
 }
 
-MouseButtonEvent::MouseButtonEvent(int x, int y, bool p, int b) : Event(EVENTTYPE::MOUSEBUTTON) {
+MouseButtonEvent::MouseButtonEvent(int x, int y, bool p, int b) : Event(EVENTTYPE::MOUSE_BUTTON) {
 
 	pos[0] = x;
 	pos[1] = y;

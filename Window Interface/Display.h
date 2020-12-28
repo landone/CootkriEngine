@@ -31,8 +31,12 @@ public:
 	void setTitle(const std::string&);
 	//Set display to fullscreen mode
 	void setFullscreen(bool);
+	//Set position of display
+	void setPosition(int, int);
 	//Change size of display
 	void setSize(int w, int h);
+	//Allow resizing window
+	void setResizable(bool);
 	//Center display in center of monitor
 	void center();
 	//Hide cursor in display

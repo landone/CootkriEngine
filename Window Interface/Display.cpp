@@ -1,11 +1,13 @@
 #include "Display.h"
 #include "KeyboardEvent.h"
 #include "MouseEvent.h"
+#include "DisplayEvent.h"
 
 #include <SDL/SDL.h>
 #undef main
 #include <GL/glew.h>
 #include <map>
+#include <time.h>
 
 #define MAKE_CURRENT() (SDL_GL_MakeCurrent((SDL_Window*)window, glContext));
 
@@ -155,8 +157,16 @@ void Display::setSize(int w, int h) {
 
 }
 
+void Display::setResizable(bool toggle) {
+	SDL_SetWindowResizable((SDL_Window*)window, (SDL_bool)toggle);
+}
+
+void Display::setPosition(int x, int y) {
+	SDL_SetWindowPosition((SDL_Window*)window, x, y);
+}
+
 void Display::center() {
-	SDL_SetWindowPosition((SDL_Window*)window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	setPosition(SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 }
 
 void Display::hideCursor(bool toggle) {
@@ -190,6 +200,11 @@ void Display::poll() {
 			switch (e.window.event) {
 			case SDL_WINDOWEVENT_CLOSE: {
 				disp.close();
+				break;
+			}
+			case SDL_WINDOWEVENT_RESIZED: {
+				DisplayResizeEvent evt(e.window.data1, e.window.data2);
+				disp.sendEvent(&evt);
 				break;
 			}
 			}
@@ -231,6 +246,15 @@ void Display::poll() {
 		}
 		}
 
+	}
+
+	//Update time & send frame event to all displays
+	static clock_t lastFrame = clock();
+	DisplayFrameEvent evt((clock() - lastFrame) / CLOCKS_PER_SEC);
+	lastFrame = clock();
+	std::map<Uint32, Display*>::iterator it = windowMap.begin();
+	for (; it != windowMap.end(); ++it) {
+		it->second->sendEvent(&evt);
 	}
 
 }
