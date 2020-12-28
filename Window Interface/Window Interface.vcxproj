@@ -146,12 +146,14 @@
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="KeyboardEvent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MouseEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventType.h" />
     <ClInclude Include="KeyboardEvent.h" />
+    <ClInclude Include="MouseEvent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

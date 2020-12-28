@@ -22,6 +22,9 @@
     <ClCompile Include="KeyboardEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
+    <ClCompile Include="MouseEvent.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h">
@@ -34,6 +37,9 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="KeyboardEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>

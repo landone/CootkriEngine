@@ -1,5 +1,6 @@
 #include "Display.h"
 #include "KeyboardEvent.h"
+#include "MouseEvent.h"
 
 #include <SDL/SDL.h>
 #undef main
@@ -187,8 +188,10 @@ void Display::poll() {
 		switch (e.type) {
 		case SDL_WINDOWEVENT: {
 			switch (e.window.event) {
-			case SDL_WINDOWEVENT_CLOSE:
+			case SDL_WINDOWEVENT_CLOSE: {
 				disp.close();
+				break;
+			}
 			}
 			break;
 		}
@@ -209,6 +212,21 @@ void Display::poll() {
 				KeyboardEvent evt(k, false);
 				disp.sendEvent(&evt);
 			}
+			break;
+		}
+		case SDL_MOUSEMOTION: {
+			MouseMotionEvent evt(e.motion.x, e.motion.y, e.motion.xrel, e.motion.yrel);
+			disp.sendEvent(&evt);
+			break;
+		}
+		case SDL_MOUSEBUTTONDOWN: {
+			MouseButtonEvent evt(e.button.x, e.button.y, true, e.button.button - 1);
+			disp.sendEvent(&evt);
+			break;
+		}
+		case SDL_MOUSEBUTTONUP: {
+			MouseButtonEvent evt(e.button.x, e.button.y, false, e.button.button - 1);
+			disp.sendEvent(&evt);
 			break;
 		}
 		}

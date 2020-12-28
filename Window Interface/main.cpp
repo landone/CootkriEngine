@@ -1,16 +1,19 @@
 #include "Display.h"
 #include "KeyboardEvent.h"
+#include "MouseEvent.h"
 
 class T : EventListener {
 public:
 	T(Display* d) : EventListener(d) {
-		addType(EVENTTYPE::KEYBOARD);
+		addType(EVENTTYPE::MOUSEBUTTON);
 	}
 private:
 	void onEvent(Event* e) override {
-		KeyboardEvent& ke = *((KeyboardEvent*)e);
-		if (ke.press) {
-			printf("%s", KeyboardEvent::keyToString(ke.key).c_str());
+		if (e->type == EVENTTYPE::MOUSEBUTTON) {
+			MouseButtonEvent& ke = *((MouseButtonEvent*)e);
+			if (ke.press && ke.btn == MOUSEBUTTON::MIDDLE) {
+				printf("(%d, %d)\n", ke.pos[0], ke.pos[1]);
+			}
 		}
 	}
 };
