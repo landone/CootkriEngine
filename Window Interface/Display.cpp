@@ -203,6 +203,8 @@ void Display::poll() {
 				break;
 			}
 			case SDL_WINDOWEVENT_RESIZED: {
+				disp.makeCurrent();
+				glViewport(0, 0, e.window.data1, e.window.data2);
 				DisplayResizeEvent evt(e.window.data1, e.window.data2);
 				disp.sendEvent(&evt);
 				break;
@@ -250,7 +252,7 @@ void Display::poll() {
 
 	//Update time & send frame event to all displays
 	static clock_t lastFrame = clock();
-	DisplayFrameEvent evt((clock() - lastFrame) / CLOCKS_PER_SEC);
+	DisplayFrameEvent evt((float)(clock() - lastFrame) / CLOCKS_PER_SEC);
 	lastFrame = clock();
 	std::map<Uint32, Display*>::iterator it = windowMap.begin();
 	for (; it != windowMap.end(); ++it) {

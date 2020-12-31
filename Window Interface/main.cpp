@@ -2,6 +2,8 @@
 #include "KeyboardEvent.h"
 #include "MouseEvent.h"
 #include "DisplayEvent.h"
+#include "BasicShader.h"
+#include "Image.h"
 
 class T : EventListener {
 public:
@@ -28,22 +30,19 @@ int main() {
 	
 	Display display("Main window");
 	display.setResizable(true);
-	Display popup(300, 100, "Other Window");
 	display.clear(0.2f, 0.2f, 0.6f, 1.0f);
-	popup.clear(0.6f, 0.2f, 0.2f, 1.0f);
+	BasicShader shader;
+	shader.bind();
+	shader.setTint(0, 1, 0);
+	Image image;
 	
 	T Test(&display);
 
-	while (display.isOpen() || popup.isOpen()) {
+	while (display.isOpen()) {
 
-		if (display.isOpen()) {
-			display.swap();
-			display.clear();
-		}
-		if (popup.isOpen()) {
-			popup.swap();
-			popup.clear();
-		}
+		display.swap();
+		display.clear();
+		image.draw();
 		Display::poll();
 
 	}

@@ -50,11 +50,13 @@ void Shader::bind() {
 
 unsigned int Shader::createUniform(const char* name) {
 
-	return glGetUniformLocation(program, name);
+	unsigned int index = glGetUniformLocation(program, name);
+	uniforms.push_back(index);
+	return index;
 
 }
 
-unsigned int Shader::bindAttribute(const char* name) {
+unsigned int Shader::createAttribute(const char* name) {
 
 	glBindAttribLocation(program, attribCount++, name);
 	return attribCount - 1;
@@ -69,7 +71,7 @@ static GLuint CreateShader(const char* text, GLenum shaderType) {
 		return 0;
 	}
 
-	int len = strlen(text);
+	int len = (int)strlen(text);
 	glShaderSource(shader, 1, &text, &len);
 	glCompileShader(shader);
 	CheckShaderError(shader, GL_COMPILE_STATUS, false, "Shader compilation failed");

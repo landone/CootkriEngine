@@ -11,6 +11,9 @@
     <Filter Include="Graphics">
       <UniqueIdentifier>{dfc9edae-d96c-4eb1-b9c2-dcdd1c5d369f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Shaders">
+      <UniqueIdentifier>{351f00c2-1d39-44f0-aaf2-dd6c769685d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,6 +37,12 @@
     <ClCompile Include="Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="BasicShader.cpp">
+      <Filter>Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h">
@@ -55,6 +64,12 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicShader.h">
+      <Filter>Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
       <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>

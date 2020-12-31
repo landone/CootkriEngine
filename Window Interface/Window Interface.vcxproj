@@ -142,19 +142,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BasicShader.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="DisplayEvent.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="KeyboardEvent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicShader.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="DisplayEvent.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventType.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="KeyboardEvent.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Shader.h" />
