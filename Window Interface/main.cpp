@@ -4,6 +4,7 @@
 #include "DisplayEvent.h"
 #include "BasicShader.h"
 #include "Image.h"
+#include "Texture.h"
 
 class T : EventListener {
 public:
@@ -33,17 +34,18 @@ int main() {
 	display.clear(0.2f, 0.2f, 0.6f, 1.0f);
 	BasicShader shader;
 	shader.bind();
-	shader.setTint(0, 1, 0);
 	Image image;
+	Texture tex("./textures/test2.png");
+	tex.bind();
 	
 	T Test(&display);
 
 	while (display.isOpen()) {
 
-		display.swap();
+		Display::poll();
 		display.clear();
 		image.draw();
-		Display::poll();
+		display.swap();
 
 	}
 

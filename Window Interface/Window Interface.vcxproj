@@ -151,6 +151,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BasicShader.h" />
@@ -162,6 +164,8 @@
     <ClInclude Include="KeyboardEvent.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
