@@ -5,10 +5,10 @@
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
-class BasicShader : public Shader {
+class UIShader : public Shader {
 public:
 
-	BasicShader();
+	UIShader();
 
 	//Index of which active texture to use
 	void setTextureIndex(unsigned int);
@@ -18,5 +18,7 @@ public:
 	void setTint(const glm::vec3&);
 	//Tint draw color
 	void setTint(float r, float g, float b);
+	//Set UI draw layer from 0 to 1. Smaller drawn on top
+	void setLayer(float);
 
 };

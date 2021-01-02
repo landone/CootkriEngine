@@ -2,7 +2,7 @@
 #include "KeyboardEvent.h"
 #include "MouseEvent.h"
 #include "DisplayEvent.h"
-#include "BasicShader.h"
+#include "UIShader.h"
 #include "Image.h"
 #include "Texture.h"
 
@@ -32,7 +32,7 @@ int main() {
 	Display display("Main window");
 	display.setResizable(true);
 	display.clear(0.2f, 0.2f, 0.6f, 1.0f);
-	BasicShader shader;
+	UIShader shader;
 	shader.bind();
 	Texture tex("./textures/test.png");
 	Texture tex2("./textures/test2.png");

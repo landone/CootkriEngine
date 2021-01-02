@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "DisplayEvent.h"
+#include "UIShader.h"
 
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
