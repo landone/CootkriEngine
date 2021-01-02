@@ -2,6 +2,8 @@
 
 #include "Event.h"
 
+#include <glm/vec2.hpp>
+
 #include <string>
 #include <list>
 
@@ -47,6 +49,10 @@ public:
 	void makeCurrent();
 	//Set as main display
 	void makeMain();
+	//Get ratio of pixels to screen units
+	glm::vec2 getPixelToScreen();
+	//Get window size
+	glm::vec2 getSize();
 
 	//Is display currently open
 	bool isOpen();
@@ -57,5 +63,6 @@ private:
 
 	void* glContext = nullptr;
 	void* window = nullptr;
+	glm::vec2 pxToScreen = glm::vec2(1,1);
 
 };

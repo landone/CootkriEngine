@@ -9,7 +9,9 @@ public:
 	Texture();
 	Texture(const std::string& path);
 
+	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
+	//Original dimensions of texture
 	glm::vec2 getDimensions();
 
 private:

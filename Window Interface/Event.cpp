@@ -72,6 +72,12 @@ void EventListener::setParent(EventManager* p) {
 
 }
 
+EventManager* EventListener::getParent() {
+
+	return parent;
+
+}
+
 void EventListener::removeParent() {
 
 	if (parent) {

@@ -1,10 +1,44 @@
 #pragma once
 
-class Image {
+#include "Texture.h"
+#include "Transform.h"
+#include "Event.h"
+#include "Display.h"
+
+class Image : public EventListener{
 public:
 
-	Image();
+	Image(const Texture&, Display* = nullptr);
 
+	//Draw image to current buffer
 	void draw();
+
+	Texture getTexture();
+
+	//Set absolute or relative position. (0,0) is center.
+	void setPos(const glm::vec2&, bool rel = false);
+	//Set absolute or relative scale
+	void setSize(const glm::vec2&, bool rel = false);
+	//Set rotation in radians
+	void setRot(float);
+	//Get absolute or relative position
+	glm::vec2 getPos(bool rel = false);
+	//Get absolute or relative scale
+	glm::vec2 getSize(bool rel = false);
+	//Get rotation in radians
+	float getRot();
+	//Get transformation matrix
+	glm::mat4 getMatrix();
+
+private:
+
+	void onEvent(Event*) override;
+
+	Texture texture;
+	glm::vec2 relPos = glm::vec2(0,0);
+	glm::vec2 absPos = glm::vec2(0,0);
+	glm::vec2 relSize = glm::vec2(0,0);
+	glm::vec2 absSize = glm::vec2(1,1);
+	Transform trans;
 
 };

@@ -29,6 +29,8 @@ protected:
 	virtual void onEvent(Event*) = 0;
 	//Set parent to listen for
 	void setParent(EventManager*);
+	//Get parent whose being listened to
+	EventManager* getParent();
 	//Stop listening to parent
 	void removeParent();
 private:

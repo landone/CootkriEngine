@@ -10,13 +10,13 @@ public:
 
 	BasicShader();
 
+	//Index of which active texture to use
 	void setTextureIndex(unsigned int);
+	//Transformation matrix
 	void setTransMatrix(const glm::mat4&);
+	//Tint draw color
 	void setTint(const glm::vec3&);
+	//Tint draw color
 	void setTint(float r, float g, float b);
-
-private:
-
-	
 
 };

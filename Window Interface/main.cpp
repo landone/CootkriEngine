@@ -34,9 +34,10 @@ int main() {
 	display.clear(0.2f, 0.2f, 0.6f, 1.0f);
 	BasicShader shader;
 	shader.bind();
-	Image image;
-	Texture tex("./textures/test2.png");
-	tex.bind();
+	Texture tex("./textures/test.png");
+	Texture tex2("./textures/test2.png");
+	Image img(tex);
+	Image img2(tex2);
 	
 	T Test(&display);
 
@@ -44,7 +45,10 @@ int main() {
 
 		Display::poll();
 		display.clear();
-		image.draw();
+		shader.setTransMatrix(img.getMatrix());
+		img.draw();
+		shader.setTransMatrix(img2.getMatrix());
+		img2.draw();
 		display.swap();
 
 	}

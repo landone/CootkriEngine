@@ -77,6 +77,8 @@ Display::Display(int width, int height, const std::string& title) {
 		mainDisplay = this;
 	}
 
+	pxToScreen = 2.0f / glm::vec2(width, height);
+
 }
 
 Display::~Display() {
@@ -87,6 +89,12 @@ Display::~Display() {
 			windowMap.begin()->second->makeMain();
 		}
 	}
+
+}
+
+glm::vec2 Display::getPixelToScreen() {
+
+	return pxToScreen;
 
 }
 
@@ -177,6 +185,14 @@ void Display::relativeCursor(bool toggle) {
 	SDL_SetRelativeMouseMode(toggle ? SDL_TRUE : SDL_FALSE);
 }
 
+glm::vec2 Display::getSize() {
+
+	int w, h;
+	SDL_GetWindowSize((SDL_Window*)window, &w, &h);
+	return glm::vec2(w, h);
+
+}
+
 void Display::swap() {
 
 	MAKE_CURRENT();
@@ -204,6 +220,7 @@ void Display::poll() {
 			}
 			case SDL_WINDOWEVENT_RESIZED: {
 				disp.makeCurrent();
+				disp.pxToScreen = 2.0f / disp.getSize();
 				glViewport(0, 0, e.window.data1, e.window.data2);
 				DisplayResizeEvent evt(e.window.data1, e.window.data2);
 				disp.sendEvent(&evt);
