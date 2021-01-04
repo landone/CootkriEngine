@@ -7,7 +7,10 @@ class Texture {
 public:
 
 	Texture();
+	//Load texture from file
 	Texture(const std::string& path);
+	//Load texture from memory
+	Texture(const unsigned char* buffer, int len);
 
 	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
@@ -18,6 +21,6 @@ private:
 
 	unsigned int id = 0;
 	glm::vec2 dimensions = glm::vec2();
-	void CreateTexture(const std::string& path);
+	void CreateTexture(unsigned char* imageData, int w, int h);
 
 };

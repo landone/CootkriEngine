@@ -156,6 +156,7 @@
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="UIShader.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="DisplayEvent.h" />
@@ -168,6 +169,12 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Window Interface.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\mono.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

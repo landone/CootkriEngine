@@ -1,12 +1,18 @@
 #include "Image.h"
 #include "DisplayEvent.h"
 #include "UIShader.h"
+#include "resource.h"
 
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
 
 #include <vector>
+
+static Texture* MONO_IMAGE = nullptr;
+static const unsigned int BMP_HEADER_SIZE = 14;
 
 struct Vertex {
 	glm::vec3 position;
@@ -30,17 +36,57 @@ static GLuint EBO = 0;
 
 void prepareVertexArray();
 
-Image::Image(const Texture& tex, Display* d) {
+Image::Image(Display* d) {
 
 	if (d == nullptr) {
 		d = Display::getMain();
 	}
 	setParent(d);
 	addType(EVENTTYPE::DISPLAY_RESIZE);
-
-	texture = tex;
 	prepareVertexArray();
 
+	if (MONO_IMAGE == nullptr) {
+		HRSRC hRes = FindResourceA(NULL, MAKEINTRESOURCEA(IDB_BITMAP1), MAKEINTRESOURCEA(RT_BITMAP));
+		if (hRes) {
+			HGLOBAL hData = LoadResource(0, hRes);
+			if (hData) {
+				DWORD rawSize = SizeofResource(0, hRes);
+				unsigned int dataSize = rawSize + BMP_HEADER_SIZE;
+				unsigned char* raw = (unsigned char*)LockResource(hData);
+				//VS Resources are garbage so I have to manually add BMP header
+				unsigned char* data = new unsigned char[dataSize];
+				data[0] = 'B';
+				data[1] = 'M';
+				*((int*)(&data[2])) = dataSize;
+				data[6] = '\0';
+				data[7] = '\0';
+				data[8] = '\0';
+				data[9] = '\0';
+				*((int*)(&data[10])) = 54;
+				memcpy(&data[BMP_HEADER_SIZE], raw, rawSize);
+				MONO_IMAGE = new Texture(data, dataSize);
+				delete[] data;
+			}
+			else {
+				printf("Unable to load mono image resource\n");
+			}
+		}
+		else {
+			printf("Unable to find mono image resource\n");
+		}
+
+	}
+
+	if (MONO_IMAGE) {
+		texture = (*MONO_IMAGE);
+		setSize(texture.getDimensions());
+	}
+
+}
+
+Image::Image(const Texture& tex, Display* d) : Image(d) {
+
+	texture = tex;
 	setSize(texture.getDimensions());
 
 }
@@ -92,6 +138,24 @@ void Image::setRot(float p) {
 
 }
 
+void Image::setTint(glm::vec3 t) {
+
+	tint = t;
+
+}
+
+void Image::setTint(float r, float g, float b) {
+
+	tint = glm::vec3(r, g, b);
+
+}
+
+void Image::setTexture(const Texture& t) {
+
+	texture = t;
+
+}
+
 glm::vec2 Image::getPos(bool rel) {
 
 	return (rel ? relPos : absPos);
@@ -110,11 +174,9 @@ float Image::getRot() {
 
 }
 
-void Image::draw() {
+glm::vec3 Image::getTint() {
 
-	texture.bind();
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
+	return tint;
 
 }
 
@@ -124,9 +186,14 @@ Texture Image::getTexture() {
 
 }
 
-glm::mat4 Image::getMatrix() {
+void Image::draw() {
 
-	return trans.getMatrix();
+	UIShader& shader = UIShader::get();
+	shader.setTint(tint);
+	shader.setTransMatrix(trans.getMatrix());
+	texture.bind();
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
 
 }
 

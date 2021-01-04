@@ -14,6 +14,12 @@
     <Filter Include="Graphics\Shaders">
       <UniqueIdentifier>{351f00c2-1d39-44f0-aaf2-dd6c769685d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{c9664e38-3c35-41a2-8b77-c5f342d7bee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{b0eb609c-62e6-486f-bff4-6b66356644ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,5 +96,18 @@
     <ClInclude Include="UIShader.h">
       <Filter>Graphics\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Window Interface.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="textures\mono.bmp">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

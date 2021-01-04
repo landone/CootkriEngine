@@ -6,13 +6,35 @@
 
 Texture::Texture() {
 
-
+	//Do nothing
 
 }
 
 Texture::Texture(const std::string& path) {
 
-	CreateTexture(path);
+	int numComp;
+	int width, height;
+	unsigned char* imageData = stbi_load(path.c_str(), &width, &height, &numComp, 4);
+	if (imageData == nullptr) {
+		printf("Texture failed to create: \"%s\"\n", path.c_str());
+		return;
+	}
+	CreateTexture(imageData, width, height);
+	stbi_image_free(imageData);
+
+}
+
+Texture::Texture(const unsigned char* buffer, int len) {
+
+	int numComp;
+	int width, height;
+	unsigned char* imageData = stbi_load_from_memory(buffer, len, &width, &height, &numComp, 3);
+	if (imageData == nullptr) {
+		printf("Texture failed to create from memory: %s\n", stbi_failure_reason());
+		return;
+	}
+	CreateTexture(imageData, width, height);
+	stbi_image_free(imageData);
 
 }
 
@@ -29,15 +51,7 @@ glm::vec2 Texture::getDimensions() {
 
 }
 
-void Texture::CreateTexture(const std::string& path) {
-
-	int numComp;
-	int width, height;
-	unsigned char* imageData = stbi_load(path.c_str(), &width, &height, &numComp, 4);
-	if (imageData == nullptr) {
-		printf("Texture failed to create: \"%s\"\n", path.c_str());
-		return;
-	}
+void Texture::CreateTexture(unsigned char* imageData, int width, int height) {
 
 	/* Flip texture vertically to correct it */
 	for (int i = 0; i < height / 2; i++) {
@@ -76,6 +90,5 @@ void Texture::CreateTexture(const std::string& path) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-	stbi_image_free(imageData);
 
 }

@@ -8,7 +8,8 @@
 class UIShader : public Shader {
 public:
 
-	UIShader();
+	//Get global UI shader
+	static UIShader& get();
 
 	//Index of which active texture to use
 	void setTextureIndex(unsigned int);
@@ -20,5 +21,9 @@ public:
 	void setTint(float r, float g, float b);
 	//Set UI draw layer from 0 to 1. Smaller drawn on top
 	void setLayer(float);
+
+private:
+
+	UIShader();
 
 };

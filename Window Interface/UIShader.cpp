@@ -2,6 +2,8 @@
 
 #include <GL/glew.h>
 
+static UIShader* global = nullptr;
+
 const char* vertexShader =
 "#version 400 core\n"
 "layout (location = 0) in vec3 position;"
@@ -25,6 +27,16 @@ const char* fragmentShader =
 "	vec4 origColor = texture(texMap, TexCoords);"
 "	FragColor = vec4(origColor.xyz * tint, 1);"
 "}";
+
+UIShader& UIShader::get() {
+
+	if (global == nullptr) {
+		global = new UIShader();
+	}
+
+	return (*global);
+
+}
 
 UIShader::UIShader() : Shader(vertexShader, fragmentShader) {
 
