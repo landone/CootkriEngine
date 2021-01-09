@@ -6,13 +6,10 @@
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
 
 #include <vector>
 
 static Texture* MONO_IMAGE = nullptr;
-static const unsigned int BMP_HEADER_SIZE = 14;
 
 struct Vertex {
 	glm::vec3 position;
@@ -46,41 +43,12 @@ Image::Image(Display* d) {
 	prepareVertexArray();
 
 	if (MONO_IMAGE == nullptr) {
-		HRSRC hRes = FindResourceA(NULL, MAKEINTRESOURCEA(IDB_BITMAP1), MAKEINTRESOURCEA(RT_BITMAP));
-		if (hRes) {
-			HGLOBAL hData = LoadResource(0, hRes);
-			if (hData) {
-				DWORD rawSize = SizeofResource(0, hRes);
-				unsigned int dataSize = rawSize + BMP_HEADER_SIZE;
-				unsigned char* raw = (unsigned char*)LockResource(hData);
-				//VS Resources are garbage so I have to manually add BMP header
-				unsigned char* data = new unsigned char[dataSize];
-				data[0] = 'B';
-				data[1] = 'M';
-				*((int*)(&data[2])) = dataSize;
-				data[6] = '\0';
-				data[7] = '\0';
-				data[8] = '\0';
-				data[9] = '\0';
-				*((int*)(&data[10])) = 54;
-				memcpy(&data[BMP_HEADER_SIZE], raw, rawSize);
-				MONO_IMAGE = new Texture(data, dataSize);
-				delete[] data;
-			}
-			else {
-				printf("Unable to load mono image resource\n");
-			}
-		}
-		else {
-			printf("Unable to find mono image resource\n");
-		}
-
+		MONO_IMAGE = new Texture;
+		MONO_IMAGE->loadBMP(IDB_BITMAP1);
 	}
 
-	if (MONO_IMAGE) {
-		texture = (*MONO_IMAGE);
-		setSize(texture.getDimensions());
-	}
+	texture = (*MONO_IMAGE);
+	setSize(texture.getDimensions());
 
 }
 

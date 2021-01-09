@@ -20,6 +20,9 @@
     <Filter Include="Resource Files\Images">
       <UniqueIdentifier>{b0eb609c-62e6-486f-bff4-6b66356644ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Tools">
+      <UniqueIdentifier>{974df99a-5a43-45c2-85bd-5a8b355b2bb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -40,23 +43,23 @@
     <ClCompile Include="DisplayEvent.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="stb_image.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="UIShader.cpp">
       <Filter>Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Graphics\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Graphics\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Graphics\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,19 +81,7 @@
     <ClInclude Include="DisplayEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="UIShader.h">
@@ -98,6 +89,18 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Graphics\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Graphics\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Graphics\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\mono.bmp">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="textures\test2.png">
       <Filter>Resource Files\Images</Filter>
     </Image>
   </ItemGroup>

@@ -12,6 +12,8 @@ public:
 	//Load texture from memory
 	Texture(const unsigned char* buffer, int len);
 
+	//Load BMP from resource ID
+	bool loadBMP(unsigned int ID);
 	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
 	//Original dimensions of texture
@@ -21,6 +23,8 @@ private:
 
 	unsigned int id = 0;
 	glm::vec2 dimensions = glm::vec2();
-	void CreateTexture(unsigned char* imageData, int w, int h);
+	void createTexture(unsigned char* imageData, int w, int h);
+	//Load image from memory
+	bool loadFromMemory(const unsigned char* buffer, int len);
 
 };

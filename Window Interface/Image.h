@@ -5,7 +5,7 @@
 #include "Event.h"
 #include "Display.h"
 
-class Image : public EventListener{
+class Image : public EventListener {
 public:
 
 	Image(Display* = nullptr);

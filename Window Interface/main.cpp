@@ -15,11 +15,10 @@ int main() {
 	shader.bind();
 	Texture tex("./textures/test.png");
 	Texture tex2("./textures/test2.png");
-	Image img;
+	Image img(tex);
 	img.setTint(1, 0, 0);
 	img.setSize(glm::vec2(64,64));
-	img.setTexture(tex);
-	Image img2;
+	Image img2(tex2);
 	img2.setSize(glm::vec2(256, 256));
 	img2.setTint(0.8f, 0.8f, 0.4f);
 	img2.setTexture(tex2);
