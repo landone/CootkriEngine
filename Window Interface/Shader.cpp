@@ -7,6 +7,10 @@ static GLuint CreateShader(const char* text, GLenum shaderType);
 static void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const char* errorMsg);
 
 Shader::Shader(const char* vertex, const char* fragment, const char* geometry) {
+	load(vertex, fragment, geometry);
+}
+
+void Shader::load(const char* vertex, const char* fragment, const char* geometry) {
 
 	program = glCreateProgram();
 	shaders[0] = CreateShader(vertex, GL_VERTEX_SHADER);

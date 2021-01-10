@@ -44,7 +44,7 @@ Image::Image(Display* d) {
 
 	if (MONO_IMAGE == nullptr) {
 		MONO_IMAGE = new Texture;
-		MONO_IMAGE->loadBMP(IDB_BITMAP1);
+		MONO_IMAGE->loadResource(IDB_TEXTURE_BLANK);
 	}
 
 	texture = (*MONO_IMAGE);

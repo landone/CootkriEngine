@@ -5,9 +5,12 @@
 class Shader {
 public:
 
-	Shader(const char* vertex, const char* fragment, const char* geometry = nullptr);
+	Shader() {}
+	Shader(const char* vertex, const char* frag, const char* geom = nullptr);
 	~Shader();
 
+	//Load a shader using strings
+	void load(const char* vertex, const char* frag, const char* geom = nullptr);
 	//Prepare shader for use
 	void bind();
 	//Allocate a uniform

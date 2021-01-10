@@ -12,8 +12,8 @@ public:
 	//Load texture from memory
 	Texture(const unsigned char* buffer, int len);
 
-	//Load BMP from resource ID
-	bool loadBMP(unsigned int ID);
+	//Load texture from resource ID
+	bool loadResource(unsigned int ID);
 	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
 	//Original dimensions of texture

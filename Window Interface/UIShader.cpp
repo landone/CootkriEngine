@@ -1,32 +1,12 @@
 #include "UIShader.h"
+#include "Resources.h"
 
 #include <GL/glew.h>
 
 static UIShader* global = nullptr;
 
-const char* vertexShader =
-"#version 400 core\n"
-"layout (location = 0) in vec3 position;"
-"layout (location = 1) in vec2 texCoord;"
-"out vec2 TexCoords;"
-"uniform mat4 transMatrix;"
-"uniform float layer;"
-"void main() {"
-"	TexCoords = texCoord;"
-"	gl_Position = transMatrix * vec4(position, 1.0);"
-"	gl_Position.z = layer;"
-"}";
-
-const char* fragmentShader =
-"#version 400 core\n"
-"in vec2 TexCoords;"
-"out vec4 FragColor;"
-"uniform sampler2D texMap;"
-"uniform vec3 tint;"
-"void main() {"
-"	vec4 origColor = texture(texMap, TexCoords);"
-"	FragColor = vec4(origColor.xyz * tint, 1);"
-"}";
+char* vertexShader = nullptr;
+char* fragmentShader = nullptr;
 
 UIShader& UIShader::get() {
 
@@ -38,7 +18,15 @@ UIShader& UIShader::get() {
 
 }
 
-UIShader::UIShader() : Shader(vertexShader, fragmentShader) {
+UIShader::UIShader() {
+
+	//Instantiate shader strings
+	if (vertexShader == nullptr) {
+		vertexShader = (char*)LoadResource(IDB_UISHADER_VS);
+		fragmentShader = (char*)LoadResource(IDB_UISHADER_FS);
+	}
+
+	load(vertexShader, fragmentShader);
 
 	createAttribute("position");
 	createAttribute("texCoord");

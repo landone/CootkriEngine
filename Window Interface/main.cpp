@@ -6,6 +6,8 @@
 #include "Image.h"
 #include "Texture.h"
 
+#include "resource.h"
+
 int main() {
 	
 	Display display("Main window");
@@ -15,13 +17,14 @@ int main() {
 	shader.bind();
 	Texture tex("./textures/test.png");
 	Texture tex2("./textures/test2.png");
-	Image img(tex);
+	Texture test;
+	test.loadResource(IDB_FONT_ASCII);
+	Image img(test);
 	img.setTint(1, 0, 0);
 	img.setSize(glm::vec2(64,64));
-	Image img2(tex2);
+	Image img2(test);
 	img2.setSize(glm::vec2(256, 256));
 	img2.setTint(0.8f, 0.8f, 0.4f);
-	img2.setTexture(tex2);
 
 	while (display.isOpen()) {
 

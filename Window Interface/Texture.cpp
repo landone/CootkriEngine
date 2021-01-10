@@ -1,10 +1,8 @@
 #include "Texture.h"
-
 #include "stb_image.h"
+#include "Resources.h"
 
 #include <GL/glew.h>
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
 
 static const unsigned int BMP_HEADER_SIZE = 14;
 
@@ -36,51 +34,23 @@ bool Texture::loadFromMemory(const unsigned char* buffer, int len) {
 
 	int numComp;
 	int width, height;
-	unsigned char* imageData = stbi_load_from_memory(buffer, len, &width, &height, &numComp, 3);
+	unsigned char* imageData = stbi_load_from_memory(buffer, len, &width, &height, &numComp, 4);
 	if (imageData == nullptr) {
 		printf("Texture failed to create from memory: %s\n", stbi_failure_reason());
 		return false;
 	}
-	createTexture(imageData, width, height);
-	stbi_image_free(imageData);
+	else {
+		createTexture(imageData, width, height);
+		stbi_image_free(imageData);
+	}
 	return true;
 }
 
-bool Texture::loadBMP(unsigned int rscID) {
+bool Texture::loadResource(unsigned int rscID) {
 
-	bool result;
-	HRSRC hRes = FindResourceA(NULL, MAKEINTRESOURCEA(rscID), MAKEINTRESOURCEA(RT_BITMAP));
-	if (hRes) {
-		HGLOBAL hData = LoadResource(0, hRes);
-		if (hData) {
-			DWORD rawSize = SizeofResource(0, hRes);
-			unsigned int dataSize = rawSize + BMP_HEADER_SIZE;
-			unsigned char* raw = (unsigned char*)LockResource(hData);
-			//VS Resources are garbage so I have to manually add BMP header
-			unsigned char* data = new unsigned char[dataSize];
-			data[0] = 'B';
-			data[1] = 'M';
-			*((int*)(&data[2])) = dataSize;
-			data[6] = '\0';
-			data[7] = '\0';
-			data[8] = '\0';
-			data[9] = '\0';
-			*((int*)(&data[10])) = 54;
-			memcpy(&data[BMP_HEADER_SIZE], raw, rawSize);
-			result = loadFromMemory(data, dataSize);
-			delete[] data;
-		}
-		else {
-			printf("Unable to load mono image resource\n");
-			return false;
-		}
-	}
-	else {
-		printf("Unable to find mono image resource\n");
-		return false;
-	}
-
-	return result;
+	int size = 0;
+	LoadResource(rscID, &size);
+	return loadFromMemory(LoadResource(rscID, &size), size);
 
 }
 
