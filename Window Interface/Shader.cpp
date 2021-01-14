@@ -46,6 +46,27 @@ Shader::~Shader() {
 
 }
 
+unsigned int Shader::createBuffer() {
+
+	GLuint buffer = 0;
+	glGenFramebuffers(1, &buffer);
+	bindBuffer(buffer);
+	return buffer;
+
+}
+
+void Shader::deleteBuffer(unsigned int id) {
+
+	glDeleteBuffers(1, &id);
+
+}
+
+void Shader::bindBuffer(unsigned int id) {
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
+	static unsigned int attachment = GL_COLOR_ATTACHMENT0;
+	glDrawBuffers(1, &attachment);
+}
+
 void Shader::bind() {
 
 	glUseProgram(program);

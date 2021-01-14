@@ -39,11 +39,14 @@ public:
 	//Retrieve used texture
 	Texture getTexture();
 
+protected:
+
+	Texture texture;
+
 private:
 
 	void onEvent(Event*) override;
 
-	Texture texture;
 	glm::vec2 relPos = glm::vec2(0,0);
 	glm::vec2 absPos = glm::vec2(0,0);
 	glm::vec2 relSize = glm::vec2(0,0);

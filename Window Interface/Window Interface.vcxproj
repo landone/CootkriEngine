@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="UIShader.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="DisplayEvent.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="UIShader.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="DisplayEvent.h" />

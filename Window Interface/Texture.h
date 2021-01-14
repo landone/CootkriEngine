@@ -12,12 +12,21 @@ public:
 	//Load texture from memory
 	Texture(const unsigned char* buffer, int len);
 
+	//Create a blank texture in OpenGL. Return texture ID.
+	static unsigned int createTexture();
+	//Remove texture ID from memory.
+	static void deleteTexture(unsigned int id);
+
 	//Load texture from resource ID
 	bool loadResource(unsigned int ID);
 	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
+	//Set this texture object's GL texture ID
+	void setID(unsigned int);
 	//Original dimensions of texture
 	glm::vec2 getDimensions();
+	//Get OpenGL id for this texture
+	unsigned int getID() { return id; }
 
 private:
 

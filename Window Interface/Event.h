@@ -8,13 +8,18 @@
 
 class EventManager;
 
+/*
+* Basic event class for passing information to listener.
+*/
 class Event {
 public:
 	Event(EVENTTYPE);
 	EVENTTYPE type;
 };
 
-//Class for listening to specific event types from specific sources
+/*
+* Listener class for specific events from an event manager.
+*/
 class EventListener {
 public:
 	EventListener() {}
@@ -36,9 +41,13 @@ protected:
 private:
 	friend EventManager;
 	EventManager* parent = nullptr;
+	//Set of events currently being listened for.
 	std::set<EVENTTYPE> types;
 };
 
+/*
+* Class for sending events to all listeners.
+*/
 class EventManager {
 public:
 	~EventManager();
@@ -47,7 +56,7 @@ protected:
 	void sendEvent(Event*);
 private:
 	friend EventListener;
-	//Map event types to list of listeners
+	//Map event type to list of listeners for fast event calling.
 	std::map<EVENTTYPE, std::list<EventListener*>> listenerMap;
 
 };

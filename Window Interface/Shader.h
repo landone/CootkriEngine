@@ -9,6 +9,13 @@ public:
 	Shader(const char* vertex, const char* frag, const char* geom = nullptr);
 	~Shader();
 
+	//Create a new buffer
+	static unsigned int createBuffer();
+	//Remove a buffer from memory
+	static void deleteBuffer(unsigned int id);
+	//Set buffer as current
+	static void bindBuffer(unsigned int);
+
 	//Load a shader using strings
 	void load(const char* vertex, const char* frag, const char* geom = nullptr);
 	//Prepare shader for use

@@ -96,6 +96,14 @@ void Texture::createTexture(unsigned char* imageData, int width, int height) {
 	dimensions[0] = (float)width;
 	dimensions[1] = (float)height;
 
+	id = createTexture();
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+
+}
+
+unsigned int Texture::createTexture() {
+
+	GLuint id = 0;
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
 	//Repeat texture when out-of-bounds
@@ -105,6 +113,18 @@ void Texture::createTexture(unsigned char* imageData, int width, int height) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	return id;
+
+}
+
+void Texture::deleteTexture(unsigned int id) {
+
+	glDeleteTextures(1, &id);
+
+}
+
+void Texture::setID(unsigned int id) {
+
+	this->id = id;
 
 }
