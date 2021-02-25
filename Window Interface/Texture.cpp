@@ -8,7 +8,7 @@ static const unsigned int BMP_HEADER_SIZE = 14;
 
 Texture::Texture() {
 
-	//Do nothing
+	createTexture();
 
 }
 
@@ -93,11 +93,8 @@ void Texture::createTexture(unsigned char* imageData, int width, int height) {
 		}
 	}
 
-	dimensions[0] = (float)width;
-	dimensions[1] = (float)height;
-
 	id = createTexture();
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	setDimensions(glm::vec2(width, height), imageData);
 
 }
 
@@ -110,10 +107,17 @@ unsigned int Texture::createTexture() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	//Linearly interpolate only 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	return id;
+
+}
+
+void Texture::setDimensions(const glm::vec2& dim, unsigned char* data) {
+
+	dimensions = dim;
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, dim.x, dim.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 }
 

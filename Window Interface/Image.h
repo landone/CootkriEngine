@@ -11,6 +11,8 @@ public:
 	Image(Display* = nullptr);
 	Image(const Texture&, Display* = nullptr);
 
+	//Draw static square vertex array
+	static void drawStatic();
 	//Draw image to current buffer
 	void draw();
 

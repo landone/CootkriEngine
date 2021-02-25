@@ -26,7 +26,9 @@ public:
 	unsigned int createAttribute(const char* name);
 
 	//Retrieve shader program index
-	unsigned getProgram() { return program; }
+	unsigned int getProgram() { return program; }
+	//Return current framebuffer
+	unsigned int getBuffer();
 
 protected:
 

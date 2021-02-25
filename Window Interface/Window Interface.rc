@@ -52,7 +52,7 @@ END
 
 IDB_TEXTURE_BLANK             RCDATA                  "textures\\mono.bmp"
 IDB_FONT_ASCII             RCDATA                  "textures\\ascii.png"
-IDB_UISHADER_FS             RCDATA                  "shaders\\UIShader.fs"
+IDB_UISHADER_FS             RCDATA                  "shaders\\UIShader.fsh"
 IDB_UISHADER_VS             RCDATA                  "shaders\\UIShader.vs"
 
 #endif    // English (United States) resources

@@ -132,7 +132,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\UIShader.fs">
+    <None Include="shaders\UIShader.fsh">
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="shaders\UIShader.vs">

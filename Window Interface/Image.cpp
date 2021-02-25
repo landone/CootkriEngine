@@ -165,6 +165,13 @@ void Image::draw() {
 
 }
 
+void Image::drawStatic() {
+
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
+
+}
+
 void prepareVertexArray() {
 	if (VAO == 0) {
 

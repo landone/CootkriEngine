@@ -23,7 +23,9 @@ public:
 	void bind(unsigned int index = 0);
 	//Set this texture object's GL texture ID
 	void setID(unsigned int);
-	//Original dimensions of texture
+	//Set dimensions of texture, optional image data parameter
+	void setDimensions(const glm::vec2&, unsigned char* = nullptr);
+	//Current dimensions of texture
 	glm::vec2 getDimensions();
 	//Get OpenGL id for this texture
 	unsigned int getID() { return id; }
@@ -31,7 +33,7 @@ public:
 private:
 
 	unsigned int id = 0;
-	glm::vec2 dimensions = glm::vec2();
+	glm::vec2 dimensions = glm::vec2(0,0);
 	void createTexture(unsigned char* imageData, int w, int h);
 	//Load image from memory
 	bool loadFromMemory(const unsigned char* buffer, int len);

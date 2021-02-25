@@ -182,7 +182,7 @@
     <Image Include="textures\mono.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\UIShader.fs" />
+    <None Include="shaders\UIShader.fsh" />
     <None Include="shaders\UIShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

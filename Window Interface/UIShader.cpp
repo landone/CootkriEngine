@@ -34,11 +34,13 @@ UIShader::UIShader() {
 	createUniform("texMap");
 	createUniform("tint");
 	createUniform("layer");
+	createUniform("texMod");
 
 	//Set default uniform values
 	setTint(1, 1, 1);
 	setTextureIndex(0);
 	setTransMatrix(glm::mat4(1.0f));
+	setTexMod();
 
 }
 
@@ -54,6 +56,14 @@ void UIShader::setTint(const glm::vec3& color) {
 
 	bind();
 	glUniform3fv(uniforms[2], 1, &color[0]);
+
+}
+
+void UIShader::setTexMod(float xOffs, float yOffs, float xScale, float yScale) {
+
+	bind();
+	glm::vec4 mod = glm::vec4(xOffs, yOffs, xScale, yScale);
+	glUniform4fv(uniforms[4], 1, &mod[0]);
 
 }
 

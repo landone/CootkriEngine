@@ -12,6 +12,7 @@ void main() {
 	if (origColor.a == 0.0f) {
 		discard;
 	}
-	FragColor = vec4(origColor.xyz * tint, 1);
 	
+	FragColor = vec4(origColor.xyz * tint, 1);
+
 }

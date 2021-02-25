@@ -50,7 +50,6 @@ unsigned int Shader::createBuffer() {
 
 	GLuint buffer = 0;
 	glGenFramebuffers(1, &buffer);
-	bindBuffer(buffer);
 	return buffer;
 
 }
@@ -70,6 +69,14 @@ void Shader::bindBuffer(unsigned int id) {
 void Shader::bind() {
 
 	glUseProgram(program);
+
+}
+
+unsigned int Shader::getBuffer() {
+
+	GLint buf = 0;
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &buf);
+	return buf;
 
 }
 
