@@ -28,9 +28,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
     <ClInclude Include="UIShader.h">
       <Filter>Graphics\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Graphics\Shaders</Filter>
     </ClInclude>
@@ -117,11 +111,6 @@
     <ClInclude Include="Text.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Window Interface.rc">
-      <Filter>Resources</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="textures\mono.bmp">

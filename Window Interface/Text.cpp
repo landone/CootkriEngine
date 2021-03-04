@@ -1,24 +1,28 @@
 #include "Text.h"
 #include "Shader.h"
-#include "resource.h"
 #include "UIShader.h"
+#include "Resources.h"
 
 #include <GL/glew.h>
 
 static Texture* DEFAULT_FONT = nullptr;
+static const char* DEFAULT_FONT_PATH = "./textures/ascii.png";
 static const float CHAR_LEN = 16.0f;
 static const float CHAR_SZ = 1.0f / CHAR_LEN;
+static unsigned int buffer = 0;
 
 Text::Text() {
 
 	if (DEFAULT_FONT == nullptr) {
 
-		DEFAULT_FONT = new Texture();
-		DEFAULT_FONT->loadResource(IDB_FONT_ASCII);
+		int size = 0;
+		char* fontImage = LoadResource(DEFAULT_FONT_PATH, &size);
+		DEFAULT_FONT = new Texture((const unsigned char*)fontImage, size);
+		delete[] fontImage;
+		buffer = Shader::createBuffer();
 
 	}
 
-	buffer = Shader::createBuffer();
 	texture.setID(Texture::createTexture());
 
 }
@@ -31,7 +35,6 @@ Text::Text(const std::string& text) : Text() {
 
 Text::~Text() {
 
-	Shader::deleteBuffer(buffer);
 	Texture::deleteTexture(texture.getID());
 
 }
@@ -62,7 +65,6 @@ void Text::drawText() {
 	glm::vec2 dim = font.getDimensions() / CHAR_LEN;
 	dim.x *= len;
 	texture.bind();
-	//texture.setDimensions(dim);
 	texture.setDimensions(dim);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.getID(), 0);
 

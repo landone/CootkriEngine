@@ -1,6 +1,4 @@
 #pragma once
 
-#include "resource.h"
-
-//Load an embedded resource by ID. nullptr on failure
-unsigned char* LoadResource(unsigned int ID, int* size = nullptr);
+//Allocate and load a file into a memory. Must be deleted.
+char* LoadResource(const char* path, int* size = nullptr);

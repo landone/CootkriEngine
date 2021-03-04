@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Window Interface", "Window Interface\Window Interface.vcxproj", "{C89AF334-BDA6-4887-A5B6-0BD662B9EEB5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cootkri Engine", "Cootkri Engine\Cootkri Engine.vcxproj", "{AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C89AF334-BDA6-4887-A5B6-0BD662B9EEB5} = {C89AF334-BDA6-4887-A5B6-0BD662B9EEB5}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

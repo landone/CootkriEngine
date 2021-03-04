@@ -46,14 +46,6 @@ bool Texture::loadFromMemory(const unsigned char* buffer, int len) {
 	return true;
 }
 
-bool Texture::loadResource(unsigned int rscID) {
-
-	int size = 0;
-	LoadResource(rscID, &size);
-	return loadFromMemory(LoadResource(rscID, &size), size);
-
-}
-
 void Texture::bind(unsigned int index) {
 
 	glActiveTexture(GL_TEXTURE0 + index);

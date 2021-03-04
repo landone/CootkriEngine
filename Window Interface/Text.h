@@ -17,6 +17,5 @@ private:
 	void drawText();
 
 	std::string contents;
-	unsigned int buffer = 0;
 
 };

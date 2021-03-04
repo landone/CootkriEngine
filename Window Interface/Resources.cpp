@@ -1,24 +1,30 @@
-#include "Resources.h"
+#define _CRT_SECURE_NO_WARNINGS
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include "Resources.h"
 #include <stdio.h>
 
-unsigned char* LoadResource(unsigned int ID, int* size) {
+char* LoadResource(const char* path, int* returnSize) {
 
-	HRSRC hRes = FindResourceA(NULL, MAKEINTRESOURCEA(ID), MAKEINTRESOURCEA(RT_RCDATA));
-	if (!hRes) {
-		printf("Unable to find resource \"%d\"\n", ID);
+	FILE* file = fopen(path, "rb");
+	if (!file) {
+		printf("Unable to open file \"%s\"\n", path);
+		if (returnSize) {
+			(*returnSize) = 0;
+		}
 		return nullptr;
 	}
-	HGLOBAL hData = LoadResource(NULL, hRes);
-	if (!hData) {
-		printf("Unable to load resource \"%d\"\n", ID);
-		return nullptr;
+
+	fseek(file, 0, SEEK_END);
+	long size = ftell(file);
+	char* data = new char[size];
+	fseek(file, SEEK_SET, 0);
+	fread(data, size, 1, file);
+	fclose(file);
+
+	if (returnSize) {
+		(*returnSize) = size;
 	}
-	if (size) {
-		(*size) = SizeofResource(NULL, hRes);
-	}
-	return (unsigned char*)LockResource(hData);
+
+	return data;
 
 }

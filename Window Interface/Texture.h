@@ -17,8 +17,6 @@ public:
 	//Remove texture ID from memory.
 	static void deleteTexture(unsigned int id);
 
-	//Load texture from resource ID
-	bool loadResource(unsigned int ID);
 	//Bind texture to an active texture index
 	void bind(unsigned int index = 0);
 	//Set this texture object's GL texture ID
@@ -29,12 +27,13 @@ public:
 	glm::vec2 getDimensions();
 	//Get OpenGL id for this texture
 	unsigned int getID() { return id; }
+	//Create texture with image data and dimensions
+	void createTexture(unsigned char* imageData, int w, int h);
 
 private:
 
 	unsigned int id = 0;
 	glm::vec2 dimensions = glm::vec2(0,0);
-	void createTexture(unsigned char* imageData, int w, int h);
 	//Load image from memory
 	bool loadFromMemory(const unsigned char* buffer, int len);
 

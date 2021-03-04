@@ -1,7 +1,6 @@
 #include "Image.h"
 #include "DisplayEvent.h"
 #include "UIShader.h"
-#include "resource.h"
 
 #include <GL/glew.h>
 #include <glm/vec3.hpp>
@@ -9,7 +8,9 @@
 
 #include <vector>
 
-static Texture* MONO_IMAGE = nullptr;
+static Texture MONO_IMAGE;
+static glm::vec2 DEFAULT_SIZE = glm::vec2(64, 64);
+static unsigned char DEFAULT_COLOR[4] = { 255,255,255,255 };
 
 struct Vertex {
 	glm::vec3 position;
@@ -42,13 +43,14 @@ Image::Image(Display* d) {
 	addType(EVENTTYPE::DISPLAY_RESIZE);
 	prepareVertexArray();
 
-	if (MONO_IMAGE == nullptr) {
-		MONO_IMAGE = new Texture;
-		MONO_IMAGE->loadResource(IDB_TEXTURE_BLANK);
+	//Monochromatic image not set yet
+	if (MONO_IMAGE.getDimensions().x == 0) {
+		MONO_IMAGE.setDimensions(glm::vec2(1, 1));
+		MONO_IMAGE.createTexture((unsigned char*)&DEFAULT_COLOR[0], 1, 1);
 	}
 
-	texture = (*MONO_IMAGE);
-	setSize(texture.getDimensions());
+	texture = MONO_IMAGE;
+	setSize(DEFAULT_SIZE);
 
 }
 

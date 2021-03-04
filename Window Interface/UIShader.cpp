@@ -22,8 +22,8 @@ UIShader::UIShader() {
 
 	//Instantiate shader strings
 	if (vertexShader == nullptr) {
-		vertexShader = (char*)LoadResource(IDB_UISHADER_VS);
-		fragmentShader = (char*)LoadResource(IDB_UISHADER_FS);
+		vertexShader = LoadResource("./shaders/UIShader.vs");
+		fragmentShader = LoadResource("./shaders/UIShader.fsh");
 	}
 
 	load(vertexShader, fragmentShader);
