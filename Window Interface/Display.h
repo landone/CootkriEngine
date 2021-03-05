@@ -7,6 +7,11 @@
 #include <string>
 #include <list>
 
+enum class CURSORTYPE {
+	ARROW, IBEAM, WAIT, CROSSHAIR, WAITARROW,
+	NWSE, NESW, WE, NS, SIZEALL, NO, HAND, NUM_CURSORS
+};
+
 class Display : public EventManager {
 public:
 
@@ -41,6 +46,8 @@ public:
 	void setResizable(bool);
 	//Center display in center of monitor
 	void center();
+	//Set cursor type
+	void setCursor(CURSORTYPE);
 	//Hide cursor in display
 	void hideCursor(bool);
 	//Lock cursor in display

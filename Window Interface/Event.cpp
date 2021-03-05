@@ -6,7 +6,7 @@ Event::Event(EVENTTYPE t) {
 
 }
 
-EventListener::EventListener(EventManager* p) {
+EventListener::EventListener(EventManager* p) : EventListener() {
 
 	setParent(p);
 

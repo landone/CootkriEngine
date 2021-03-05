@@ -21,6 +21,8 @@ static bool sdl_init = false;
 static bool glew_init = false;
 //Map window ID to display
 static std::map<Uint32, Display*> windowMap;
+//System cursor array
+static SDL_Cursor* systemCursors[(int)CURSORTYPE::NUM_CURSORS] = { nullptr };
 static Display* mainDisplay = nullptr;
 
 Display::Display() : Display(DEFAULT_SIZE[0], DEFAULT_SIZE[1], DEFAULT_NAME) {}
@@ -35,6 +37,12 @@ Display::Display(int width, int height, const std::string& title) {
 		sdl_init = true;
 		printf("SDL_Init Error: %s\n", SDL_GetError());
 		return;
+	}
+
+	if (systemCursors[0] == nullptr) {
+		for (int i = 0; i < (int)CURSORTYPE::NUM_CURSORS; ++i) {
+			systemCursors[i] = SDL_CreateSystemCursor((SDL_SystemCursor)i);
+		}
 	}
 
 	/* Prepare buffers */
@@ -171,6 +179,12 @@ void Display::setResizable(bool toggle) {
 
 void Display::setPosition(int x, int y) {
 	SDL_SetWindowPosition((SDL_Window*)window, x, y);
+}
+
+void Display::setCursor(CURSORTYPE t) {
+
+	SDL_SetCursor(systemCursors[(int)t]);
+
 }
 
 void Display::center() {

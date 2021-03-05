@@ -176,14 +176,6 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="textures\ascii.png" />
-    <Image Include="textures\mono.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\UIShader.fsh" />
-    <None Include="shaders\UIShader.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

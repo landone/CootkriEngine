@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{d283d307-bf0d-41d6-9631-92a700de7b6e}</UniqueIdentifier>
     </Filter>
@@ -17,20 +13,11 @@
     <Filter Include="Graphics\Tools">
       <UniqueIdentifier>{974df99a-5a43-45c2-85bd-5a8b355b2bb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
+    <Filter Include="Tools">
       <UniqueIdentifier>{c9664e38-3c35-41a2-8b77-c5f342d7bee9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Textures">
-      <UniqueIdentifier>{b0eb609c-62e6-486f-bff4-6b66356644ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Shaders">
-      <UniqueIdentifier>{6f1e699b-511f-41ec-90f8-6466c6667944}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Display.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Events</Filter>
     </ClCompile>
@@ -62,16 +49,16 @@
       <Filter>Graphics\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
-      <Filter>Resources</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Display.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Display.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Events</Filter>
     </ClInclude>
@@ -106,26 +93,13 @@
       <Filter>Graphics\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
-      <Filter>Resources</Filter>
+      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="textures\mono.bmp">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="textures\ascii.png">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="shaders\UIShader.fsh">
-      <Filter>Resources\Shaders</Filter>
-    </None>
-    <None Include="shaders\UIShader.vs">
-      <Filter>Resources\Shaders</Filter>
-    </None>
+    <ClInclude Include="Display.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
