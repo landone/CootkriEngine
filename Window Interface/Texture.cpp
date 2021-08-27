@@ -109,7 +109,7 @@ unsigned int Texture::createTexture() {
 void Texture::setDimensions(const glm::vec2& dim, unsigned char* data) {
 
 	dimensions = dim;
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, dim.x, dim.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)dim.x, (GLsizei)dim.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 }
 

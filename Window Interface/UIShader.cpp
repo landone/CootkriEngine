@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 
 static UIShader* global = nullptr;
+static const char* VERT_SHDR = "./shaders/UIShader.vs";
+static const char* FRAG_SHDR = "./shaders/UIShader.fsh";
 
 char* vertexShader = nullptr;
 char* fragmentShader = nullptr;
@@ -22,8 +24,8 @@ UIShader::UIShader() {
 
 	//Instantiate shader strings
 	if (vertexShader == nullptr) {
-		vertexShader = LoadResource("./shaders/UIShader.vs");
-		fragmentShader = LoadResource("./shaders/UIShader.fsh");
+		vertexShader = LoadResource(VERT_SHDR);
+		fragmentShader = LoadResource(FRAG_SHDR);
 	}
 
 	load(vertexShader, fragmentShader);

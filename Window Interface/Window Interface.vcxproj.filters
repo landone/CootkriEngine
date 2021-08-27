@@ -57,6 +57,9 @@
     <ClCompile Include="Display.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Event.h">
@@ -99,6 +102,9 @@
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Display.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
       <Filter>Graphics</Filter>
     </ClInclude>
   </ItemGroup>

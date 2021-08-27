@@ -1,44 +1,46 @@
 #pragma once
 
 #include "Texture.h"
-#include "Transform.h"
-#include "Event.h"
-#include "Display.h"
+#include "UIElement.h"
 
-class Image : public EventListener {
+class Image : public UIElement {
 public:
 
 	Image(Display* = nullptr);
 	Image(const Texture&, Display* = nullptr);
-
-	//Draw static square vertex array
+	
+	/// <summary>
+	/// Draw static square vertex array
+	/// </summary>
 	static void drawStatic();
-	//Draw image to current buffer
-	void draw();
 
-	//Set absolute or relative position. (0,0) is center.
-	void setPos(const glm::vec2&, bool rel = false);
-	//Set absolute or relative scale
-	void setSize(const glm::vec2&, bool rel = false);
-	//Set rotation in radians
-	void setRot(float);
-	//Tint image a color
-	void setTint(glm::vec3);
-	//Tint image a color
-	void setTint(float r, float g, float b);
-	//Change image's texture
-	void setTexture(const Texture&);
+	/// <summary>
+	/// Draw image to current buffer
+	/// </summary>
+	void draw() override;
 
+	/// <summary>
+	/// Tint image a color
+	/// </summary>
+	/// <param name="color">Color RGB vector</param>
+	void setTint(glm::vec3 color);
 
-	//Get absolute or relative position
-	glm::vec2 getPos(bool rel = false);
-	//Get absolute or relative scale
-	glm::vec2 getSize(bool rel = false);
-	//Get rotation in radians
-	float getRot();
-	//Tint color as vector
+	/// <summary>
+	/// Change image's texture
+	/// </summary>
+	/// <param name="tex">Texture to use</param>
+	void setTexture(const Texture& tex);
+
+	/// <summary>
+	/// Get tint color vector
+	/// </summary>
+	/// <returns>Color RGB vector</returns>
 	glm::vec3 getTint();
-	//Retrieve used texture
+
+	/// <summary>
+	/// Retrieve used texture
+	/// </summary>
+	/// <returns>Texture</returns>
 	Texture getTexture();
 
 protected:
@@ -47,13 +49,6 @@ protected:
 
 private:
 
-	void onEvent(Event*) override;
-
-	glm::vec2 relPos = glm::vec2(0,0);
-	glm::vec2 absPos = glm::vec2(0,0);
-	glm::vec2 relSize = glm::vec2(0,0);
-	glm::vec2 absSize = glm::vec2(1,1);
 	glm::vec3 tint = glm::vec3(1, 1, 1);
-	Transform trans;
 
 };

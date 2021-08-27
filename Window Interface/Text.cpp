@@ -60,7 +60,7 @@ void Text::drawText() {
 	Texture& font = (*DEFAULT_FONT);
 
 	//Prepare texture
-	int len = contents.length();
+	int len = (int)contents.length();
 	//Dimensions of the final text
 	glm::vec2 dim = font.getDimensions() / CHAR_LEN;
 	dim.x *= len;
@@ -70,7 +70,7 @@ void Text::drawText() {
 
 	font.bind();
 	Transform trans;
-	glViewport(0, 0, dim.x, dim.y);
+	glViewport(0, 0, (GLsizei)dim.x, (GLsizei)dim.y);
 
 	//Clear and restore original clear color
 	GLfloat origClear[4];
