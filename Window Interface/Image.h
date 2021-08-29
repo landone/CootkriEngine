@@ -46,6 +46,7 @@ public:
 protected:
 
 	Texture texture;
+	void onEvent(Event*) override;
 
 private:
 

@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "UIShader.h"
+#include "MouseEvent.h"
 
 #include <GL/glew.h>
 
@@ -43,6 +44,23 @@ Image::Image(Display* d) : UIElement(d) {
 
 	texture = MONO_IMAGE;
 	setSize(DEFAULT_SIZE);
+
+	addType(EVENTTYPE::MOUSE_BUTTON);
+
+}
+
+void Image::onEvent(Event* e) {
+
+	UIElement::onEvent(e);
+
+	if (e->type == EVENTTYPE::MOUSE_BUTTON) {
+		MouseButtonEvent& me = *((MouseButtonEvent*)e);
+		if (me.btn == MOUSEBUTTON::LEFT && !me.press) {
+			/*if (collides(glm::vec2(me.pos[0], me.pos[1]))) {
+				tint = glm::vec3(1,1,1) - tint;
+			}*/
+		}
+	}
 
 }
 
