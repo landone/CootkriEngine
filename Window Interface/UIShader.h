@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Shader.h"
+#include "Event.h"
 
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
-class UIShader : public Shader {
+class UIShader : public Shader, private EventListener {
 public:
 
 	//Get global UI shader
@@ -24,7 +25,14 @@ public:
 	//Set UI draw layer from 0 to 1. Smaller drawn on top
 	void setLayer(float);
 
+protected:
+
+	void onEvent(Event*) override;
+
 private:
+
+	//Update view matrix with display size
+	void updateViewMatrix();
 
 	UIShader();
 

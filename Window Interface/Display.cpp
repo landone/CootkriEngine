@@ -85,7 +85,8 @@ Display::Display(int width, int height, const std::string& title) {
 		mainDisplay = this;
 	}
 
-	pxToScreen = 2.0f / glm::vec2(width, height);
+	screenWidth = 2.0f * width / height;
+	pxToScreen = glm::vec2(screenWidth / width, 2.0f / height);
 
 }
 
@@ -234,7 +235,9 @@ void Display::poll() {
 			}
 			case SDL_WINDOWEVENT_RESIZED: {
 				disp.makeCurrent();
-				disp.pxToScreen = 2.0f / disp.getSize();
+				glm::vec2 size = disp.getSize();
+				disp.screenWidth = 2.0f * size.x / size.y;
+				disp.pxToScreen = glm::vec2(disp.screenWidth, 2.0f) / size;
 				glViewport(0, 0, e.window.data1, e.window.data2);
 				DisplayResizeEvent evt(e.window.data1, e.window.data2);
 				disp.sendEvent(&evt);
@@ -263,17 +266,22 @@ void Display::poll() {
 			break;
 		}
 		case SDL_MOUSEMOTION: {
-			MouseMotionEvent evt(e.motion.x, e.motion.y, e.motion.xrel, e.motion.yrel);
+			glm::vec2 motion(e.motion.x, e.motion.y);
+			MouseMotionEvent evt(motion, e.motion.xrel, e.motion.yrel);
 			disp.sendEvent(&evt);
 			break;
 		}
 		case SDL_MOUSEBUTTONDOWN: {
-			MouseButtonEvent evt(e.button.x, e.button.y, true, e.button.button - 1);
+			glm::vec2 pt(e.button.x, e.button.y);
+			disp.rawCoordToScreen(pt);
+			MouseButtonEvent evt(pt, true, e.button.button - 1);
 			disp.sendEvent(&evt);
 			break;
 		}
 		case SDL_MOUSEBUTTONUP: {
-			MouseButtonEvent evt(e.button.x, e.button.y, false, e.button.button - 1);
+			glm::vec2 pt(e.button.x, e.button.y);
+			disp.rawCoordToScreen(pt);
+			MouseButtonEvent evt(pt, false, e.button.button - 1);
 			disp.sendEvent(&evt);
 			break;
 		}
@@ -295,5 +303,20 @@ void Display::poll() {
 bool Display::isOpen() {
 	
 	return window != nullptr;
+
+}
+
+glm::vec2 Display::getScreenSpace() {
+
+	return glm::vec2(screenWidth, 2.0f);
+
+}
+
+void Display::rawCoordToScreen(glm::vec2& pt) {
+
+	pt *= pxToScreen;
+	pt.x /= screenWidth * 0.5f;
+	pt.x -= 1.0f;
+	pt.y = -pt.y + 1.0f;
 
 }

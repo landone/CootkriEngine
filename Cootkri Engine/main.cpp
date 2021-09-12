@@ -22,24 +22,23 @@ protected:
 		if (e->type == EVENTTYPE::MOUSE_BUTTON) {
 			MouseButtonEvent me = *((MouseButtonEvent*)e);
 			if (me.press) {
-				glm::vec2 pt = glm::vec2(me.pos[0], me.pos[1]);
-				pt = pt * (Display::getMain()->getPixelToScreen());
-				pt.x -= 1.0f;
-				pt.y = -pt.y + 1;
 				if (me.btn == MOUSEBUTTON::LEFT) {
-					el[0]->setPos(pt, true);
+					el[0]->setPos(me.pos, true);
+					el[0]->setPos(glm::vec2(0,0));
 				}
 				else if (me.btn == MOUSEBUTTON::RIGHT) {
-					el[1]->setPos(pt, true);
+					el[1]->setPos(me.pos, true);
+					el[1]->setPos(glm::vec2(0, 0));
 				}
 			}
 		}
 		else {
+			el[0]->setRot(el[0]->getRot() + 0.05f);
 			if (el[0]->collides(*el[1])) {
-				Display::getMain()->setCursor(CURSORTYPE::CROSSHAIR);
+				Display::getMain()->clear(0, 0, 0, 1.0);
 			}
 			else {
-				Display::getMain()->setCursor(CURSORTYPE::HAND);
+				Display::getMain()->clear(0.4, 0.4, 0.4, 1.0);
 			}
 		}
 	}
@@ -65,12 +64,12 @@ int main() {
 	rPanel.setSize(glm::vec2(0, 2), true);
 	rPanel.setTint(glm::vec3(0.8f, 0, 0.8f));
 
-	/*Image bPanel;
+	Image bPanel;
 	bPanel.setPos(glm::vec2(0, 150));
 	bPanel.setPos(glm::vec2(0, -1), true);
 	bPanel.setSize(glm::vec2(0, 300));
 	bPanel.setSize(glm::vec2(2, 0), true);
-	bPanel.setTint(glm::vec3(0.8f, 0.1f, 0.2f));*/
+	bPanel.setTint(glm::vec3(0.8f, 0.1f, 0.2f));
 
 	Tester test;
 	test.el[0] = &lPanel;
@@ -82,7 +81,7 @@ int main() {
 		disp.clear();
 		lPanel.draw();
 		rPanel.draw();
-		//bPanel.draw();
+		bPanel.draw();
 		disp.swap();
 	}
 

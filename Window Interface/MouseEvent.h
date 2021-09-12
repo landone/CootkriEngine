@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include <glm/vec2.hpp>
 
 enum class MOUSEBUTTON {
 	LEFT,
@@ -10,15 +11,15 @@ enum class MOUSEBUTTON {
 
 class MouseMotionEvent : public Event {
 public:
-	MouseMotionEvent(int x, int y, int xr, int yr);
-	int pos[2];
+	MouseMotionEvent(glm::vec2 pt, int xr, int yr);
+	glm::vec2 pos;
 	int rel[2];
 };
 
 class MouseButtonEvent : public Event {
 public:
-	MouseButtonEvent(int x, int y, bool press, int btn);
-	int pos[2];
+	MouseButtonEvent(glm::vec2 pt, bool press, int btn);
+	glm::vec2 pos;
 	bool press;
 	MOUSEBUTTON btn;
 };

@@ -1,6 +1,7 @@
 #include "UIElement.h"
 
 #define getPixelRatio()		(((Display*)getParent())->getPixelToScreen())
+#define getScreenSpace()	(((Display*)getParent())->getScreenSpace())
 
 UIElement::UIElement(Display* disp) {
 
@@ -20,12 +21,9 @@ void UIElement::onEvent(Event* e) {
 	if (e->type == EVENTTYPE::DISPLAY_RESIZE) {
 		//Fix absolute coordinates on resize
 		glm::vec2 ratio = getPixelRatio();
-		if (absPos != glm::vec2(0, 0)) {
-			trans.setPos(glm::vec3(relPos + absPos * ratio, 0));
-		}
-		if (absSize != glm::vec2(0, 0)) {
-			trans.setScale(glm::vec3(relSize + absSize * ratio, 1));
-		}
+		glm::vec2 space = getScreenSpace() / 2.0f;
+		trans.setPos(glm::vec3(relPos * space + absPos * ratio, 0));
+		trans.setScale(glm::vec3(relSize * space + absSize * ratio, 1));
 	}
 
 }
@@ -40,7 +38,8 @@ void UIElement::setPos(const glm::vec2& pos, bool rel) {
 	}
 
 	glm::vec2 ratio = getPixelRatio();
-	trans.setPos(glm::vec3(relPos + absPos * ratio, 0));
+	glm::vec2 space = getScreenSpace() / 2.0f;
+	trans.setPos(glm::vec3(relPos * space + absPos * ratio, 0));
 
 }
 
@@ -54,7 +53,8 @@ void UIElement::setSize(const glm::vec2& scale, bool rel) {
 	}
 
 	glm::vec2 ratio = getPixelRatio();
-	trans.setScale(glm::vec3(relSize + absSize * ratio, 1));
+	glm::vec2 space = getScreenSpace() / 2.0f;
+	trans.setScale(glm::vec3(abs(relSize * space + absSize * ratio), 1));
 
 }
 
@@ -89,11 +89,6 @@ glm::mat4 UIElement::getMatrix() {
 }
 
 bool UIElement::collides(glm::vec2 pt) {
-
-	//Convert pixel coords to screen coords
-	pt = pt * getPixelRatio();
-	pt.x -= 1.0f;
-	pt.y = -pt.y + 1;
 
 	glm::vec2 pts[4];
 	getTransPts(pts);

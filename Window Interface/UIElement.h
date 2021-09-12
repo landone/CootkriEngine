@@ -70,9 +70,9 @@ public:
 	glm::mat4 getMatrix();
 
 	/// <summary>
-	/// Check if this element collides with a point.
+	/// Check if this element collides with a relative point.
 	/// </summary>
-	/// <param name="pt">Absolute collision point</param>
+	/// <param name="pt">Relative collision point</param>
 	/// <returns>True if collides, otherwise false</returns>
 	bool collides(glm::vec2 pt);
 

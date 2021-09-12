@@ -1,7 +1,10 @@
 #include "UIShader.h"
 #include "Resources.h"
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
+#include "Display.h"
+#include "DisplayEvent.h"
 
 static UIShader* global = nullptr;
 static const char* VERT_SHDR = "./shaders/UIShader.vs";
@@ -37,12 +40,23 @@ UIShader::UIShader() {
 	createUniform("tint");
 	createUniform("layer");
 	createUniform("texMod");
+	createUniform("viewMatrix");
 
 	//Set default uniform values
 	setTint(1, 1, 1);
 	setTextureIndex(0);
 	setTransMatrix(glm::mat4(1.0f));
 	setTexMod();
+	updateViewMatrix();
+
+	setParent(Display::getMain());
+	addType(EVENTTYPE::DISPLAY_RESIZE);
+
+}
+
+void UIShader::onEvent(Event* e) {
+
+	updateViewMatrix();
 
 }
 
@@ -86,5 +100,18 @@ void UIShader::setTransMatrix(const glm::mat4& mat) {
 void UIShader::setTint(float r, float g, float b) {
 
 	setTint(glm::vec3(r, g, b));
+
+}
+
+void UIShader::updateViewMatrix() {
+
+	bind();
+	glm::vec2 dim = Display::getMain()->getSize();
+	float aspect = dim.x / dim.y;
+	float fov = atan(1.0f) * 2;
+	float near = 0.9f;
+	float far = 1.1f;
+	glm::mat4 viewMat = glm::perspective(fov, aspect, near, far) * glm::lookAt(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	glUniformMatrix4fv(uniforms[5], 1, GL_FALSE, &viewMat[0][0]);
 
 }
