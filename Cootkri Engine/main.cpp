@@ -23,23 +23,12 @@ protected:
 			MouseButtonEvent me = *((MouseButtonEvent*)e);
 			if (me.press) {
 				if (me.btn == MOUSEBUTTON::LEFT) {
-					el[0]->setPos(me.pos, true);
-					el[0]->setPos(glm::vec2(0,0));
 				}
 				else if (me.btn == MOUSEBUTTON::RIGHT) {
-					el[1]->setPos(me.pos, true);
-					el[1]->setPos(glm::vec2(0, 0));
 				}
 			}
 		}
 		else {
-			el[0]->setRot(el[0]->getRot() + 0.05f);
-			if (el[0]->collides(*el[1])) {
-				Display::getMain()->clear(0, 0, 0, 1.0);
-			}
-			else {
-				Display::getMain()->clear(0.4, 0.4, 0.4, 1.0);
-			}
 		}
 	}
 
@@ -71,6 +60,13 @@ int main() {
 	bPanel.setSize(glm::vec2(2, 0), true);
 	bPanel.setTint(glm::vec3(0.8f, 0.1f, 0.2f));
 
+	Image tPanel;
+	tPanel.setOrigin(ORIGIN::TOP);
+	tPanel.setPos(glm::vec2(0, 1), true);
+	tPanel.setPos(glm::vec2(0,0));
+	tPanel.setSize(glm::vec2(2, 2), true);
+	tPanel.setSize(glm::vec2(-600, -300));
+
 	Tester test;
 	test.el[0] = &lPanel;
 	test.el[1] = &rPanel;
@@ -79,9 +75,11 @@ int main() {
 	while (disp.isOpen()) {
 		disp.poll();
 		disp.clear();
+		tPanel.draw();
 		lPanel.draw();
 		rPanel.draw();
 		bPanel.draw();
+		
 		disp.swap();
 	}
 

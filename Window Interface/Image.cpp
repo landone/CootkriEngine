@@ -15,20 +15,22 @@ struct Vertex {
 	glm::vec2 texCoord;
 };
 
-static const std::vector<Vertex> g_vertices{
-	Vertex{ glm::vec3(-0.5f,-0.5f,0), glm::vec2(0,0) },
-	Vertex{ glm::vec3(0.5f,-0.5f,0), glm::vec2(1,0) },
-	Vertex{ glm::vec3(0.5f,0.5f,0), glm::vec2(1,1) },
-	Vertex{ glm::vec3(-0.5f,0.5f,0), glm::vec2(0,1) }
+static std::vector<std::vector<Vertex>> g_vertices{
+	{//Center
+		Vertex{ glm::vec3(-0.5f,-0.5f,0), glm::vec2(0,0) },
+		Vertex{ glm::vec3(0.5f,-0.5f,0), glm::vec2(1,0) },
+		Vertex{ glm::vec3(0.5f,0.5f,0), glm::vec2(1,1) },
+		Vertex{ glm::vec3(-0.5f,0.5f,0), glm::vec2(0,1) }
+	}
 };
 
 static const std::vector<GLuint> g_indices{
 	0, 1, 2, 2, 3, 0
 };
 
-static GLuint VAO = 0;
-static GLuint VBO = 0;
-static GLuint EBO = 0;
+static std::vector<GLuint> VAO;
+static std::vector<GLuint> VBO;
+static std::vector<GLuint> EBO;
 
 void prepareVertexArray();
 
@@ -61,6 +63,16 @@ void Image::onEvent(Event* e) {
 			}*/
 		}
 	}
+
+}
+
+ORIGIN Image::getOrigin() {
+	return origin;
+}
+
+void Image::setOrigin(ORIGIN ori) {
+
+	origin = ori;
 
 }
 
@@ -101,37 +113,64 @@ void Image::draw() {
 	shader.setTint(tint);
 	shader.setTransMatrix(getMatrix());
 	texture.bind();
-	glBindVertexArray(VAO);
+	glBindVertexArray(VAO[(int)origin]);
 	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
 
 }
 
 void Image::drawStatic() {
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(VAO[(int)ORIGIN::CENTER]);
 	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
 
 }
 
 void prepareVertexArray() {
-	if (VAO == 0) {
+	if (VAO.size() == 0) {
 
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
-		glGenBuffers(1, &EBO);
+		const glm::vec3 offsets[] = {
+			glm::vec3(0,-0.5f,0),//Top
+			glm::vec3(0,0.5f,0),//Bottom
+			glm::vec3(-0.5f,0,0),//Right
+			glm::vec3(0.5f,0,0),//Left
+			glm::vec3(-0.5f,-0.5f,0),//TopRight
+			glm::vec3(-0.5f,0.5f,0),//BottomRight
+			glm::vec3(0.5f,-0.5f,0),//TopLeft
+			glm::vec3(0.5f,0.5f,0),//BottomLeft
+		};
 
-		glBindVertexArray(VAO);
+		/* Create meshes for all corners */
+		for (int i = 0; i < (int)ORIGIN::MAX_ORIGINS; ++i) {
+			std::vector<Vertex> newVerts;
+			for (int j = 0; j < g_vertices[0].size(); ++j) {
+				Vertex vert = g_vertices[0][j];
+				vert.position += offsets[i];
+				newVerts.push_back(vert);
+			}
+			g_vertices.push_back(newVerts);
+		}
 
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, g_vertices.size() * sizeof(Vertex), &g_vertices[0], GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, g_indices.size() * sizeof(GLuint), &g_indices[0], GL_STATIC_DRAW);
+		VAO.resize(g_vertices.size());
+		VBO.resize(g_vertices.size());
+		EBO.resize(g_vertices.size());
+		for (int i = 0; i < g_vertices.size(); ++i) {
+			glGenVertexArrays(1, &VAO[i]);
+			glGenBuffers(1, &VBO[i]);
+			glGenBuffers(1, &EBO[i]);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, position));
+			glBindVertexArray(VAO[i]);
 
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texCoord));
+			glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
+			glBufferData(GL_ARRAY_BUFFER, g_vertices[i].size() * sizeof(Vertex), &g_vertices[i][0], GL_DYNAMIC_DRAW);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, g_indices.size() * sizeof(GLuint), &g_indices[0], GL_STATIC_DRAW);
+
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, position));
+
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texCoord));
+		}
 
 	}
 }
