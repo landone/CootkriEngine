@@ -16,14 +16,16 @@ char* fragmentShader = nullptr;
 UIShader& UIShader::get() {
 
 	if (global == nullptr) {
-		global = new UIShader();
+		//Default to main window
+		EventManager* disp = Display::getMain();
+		global = new UIShader(disp);
 	}
 
 	return (*global);
 
 }
 
-UIShader::UIShader() {
+UIShader::UIShader(EventManager* evtM) {
 
 	//Instantiate shader strings
 	if (vertexShader == nullptr) {
@@ -47,16 +49,19 @@ UIShader::UIShader() {
 	setTextureIndex(0);
 	setTransMatrix(glm::mat4(1.0f));
 	setTexMod();
-	updateViewMatrix();
+	updateViewMatrix(Display::getMain()->getSize());
 
-	setParent(Display::getMain());
+	setParent(evtM);
 	addType(EVENTTYPE::DISPLAY_RESIZE);
 
 }
 
 void UIShader::onEvent(Event* e) {
 
-	updateViewMatrix();
+	if (e->type == EVENTTYPE::DISPLAY_RESIZE) {
+		DisplayResizeEvent& me = *(DisplayResizeEvent*)e;
+		updateViewMatrix(glm::vec2(me.size[0], me.size[1]));
+	}
 
 }
 
@@ -103,11 +108,10 @@ void UIShader::setTint(float r, float g, float b) {
 
 }
 
-void UIShader::updateViewMatrix() {
+void UIShader::updateViewMatrix(glm::vec2 winSize) {
 
 	bind();
-	glm::vec2 dim = Display::getMain()->getSize();
-	float aspect = dim.x / dim.y;
+	float aspect = winSize.x / winSize.y;
 	float fov = atan(1.0f) * 2;
 	float near = 0.9f;
 	float far = 1.1f;

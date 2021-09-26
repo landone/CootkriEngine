@@ -9,6 +9,8 @@
 class UIShader : public Shader, private EventListener {
 public:
 
+	UIShader(EventManager* = nullptr);
+
 	//Get global UI shader
 	static UIShader& get();
 
@@ -32,7 +34,7 @@ protected:
 private:
 
 	//Update view matrix with display size
-	void updateViewMatrix();
+	void updateViewMatrix(glm::vec2 winSize);
 
 	UIShader();
 

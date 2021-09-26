@@ -5,6 +5,7 @@
 #include "Transform.h"
 
 #include <glm/glm.hpp>
+#include <vector>
 
 /// <summary>
 /// User interface element to control display-based positioning.
@@ -13,10 +14,19 @@ class UIElement : public EventListener {
 public:
 
 	/// <summary>
+	/// Origin position of image
+	/// </summary>
+	enum class ORIGIN {
+		CENTER, TOP, BOTTOM, RIGHT, LEFT,
+		TOPRIGHT, BOTTOMRIGHT, TOPLEFT, BOTTOMLEFT,
+		MAX_ORIGINS
+	};
+
+	/// <summary>
 	/// User interface element
 	/// </summary>
-	/// <param name="disp">Display to use. (Main display if null)</param>
-	UIElement(Display* disp = nullptr);
+	/// <param name="evtM">EvtManager to use. (Main display if null)</param>
+	UIElement(EventManager* evtM = nullptr);
 
 	/// <summary>
 	/// Element draw function prototype
@@ -83,9 +93,42 @@ public:
 	/// <returns>True if collides, otherwise false</returns>
 	bool collides(UIElement& el);
 
+	/// <summary>
+	/// Get origin position of image
+	/// </summary>
+	/// <returns>Origin enum</returns>
+	ORIGIN getOrigin();
+
+	/// <summary>
+	/// Set origin position of image
+	/// </summary>
+	/// <param name=""></param>
+	void setOrigin(ORIGIN);
+
+	struct Vertex {
+		glm::vec3 position;
+		glm::vec2 texCoord;
+	};
+
 protected:
 
+	/// <summary>
+	/// Get origin offset for element vertices
+	/// </summary>
+	/// <param name="origin">Assoc. origin</param>
+	/// <returns>Offset vector</returns>
+	static glm::vec3 getOriginOffset(ORIGIN);
+
+	static const std::vector<Vertex>& getVertices();
+
+	static const std::vector<unsigned int>& getIndices();
+
 	void onEvent(Event*) override;
+
+	/// <summary>
+	/// Origin anchor point of UI element
+	/// </summary>
+	ORIGIN origin = ORIGIN::CENTER;
 
 private:
 	

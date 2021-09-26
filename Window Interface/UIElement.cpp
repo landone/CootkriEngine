@@ -3,16 +3,60 @@
 #define getPixelRatio()		(((Display*)getParent())->getPixelToScreen())
 #define getScreenSpace()	(((Display*)getParent())->getScreenSpace())
 
-UIElement::UIElement(Display* disp) {
+typedef UIElement::Vertex Vertex;
 
-	if (disp == nullptr) {
-		disp = Display::getMain();
+static std::vector<Vertex> g_vertices{
+	//Center
+	Vertex{ glm::vec3(-0.5f,-0.5f,0), glm::vec2(0,0) },
+	Vertex{ glm::vec3(0.5f,-0.5f,0), glm::vec2(1,0) },
+	Vertex{ glm::vec3(0.5f,0.5f,0), glm::vec2(1,1) },
+	Vertex{ glm::vec3(-0.5f,0.5f,0), glm::vec2(0,1) }
+};
+
+static const std::vector<unsigned int> g_indices{
+	0, 1, 2, 2, 3, 0
+};
+
+static const glm::vec3 g_offsets[] = {
+			glm::vec3(0,0,0),//Center
+			glm::vec3(0,-0.5f,0),//Top
+			glm::vec3(0,0.5f,0),//Bottom
+			glm::vec3(-0.5f,0,0),//Right
+			glm::vec3(0.5f,0,0),//Left
+			glm::vec3(-0.5f,-0.5f,0),//TopRight
+			glm::vec3(-0.5f,0.5f,0),//BottomRight
+			glm::vec3(0.5f,-0.5f,0),//TopLeft
+			glm::vec3(0.5f,0.5f,0),//BottomLeft
+};
+
+UIElement::UIElement(EventManager* evtM) {
+
+	if (evtM == nullptr) {
+		evtM = Display::getMain();
 	}
-	setParent(disp);
+	setParent(evtM);
 	addType(EVENTTYPE::DISPLAY_RESIZE);
 
 	//Transform defaults with scale of 1, zero this
 	trans.setScale(glm::vec3(0, 0, 0));
+
+}
+
+glm::vec3 UIElement::getOriginOffset(ORIGIN o) {
+
+	return g_offsets[(int)o];
+
+}
+
+const std::vector<Vertex>& UIElement::getVertices() {
+
+	return g_vertices;
+
+}
+
+const std::vector<unsigned int>& UIElement::getIndices() {
+
+	return g_indices;
 
 }
 
@@ -85,6 +129,16 @@ float UIElement::getRot() {
 glm::mat4 UIElement::getMatrix() {
 
 	return trans.getMatrix();
+
+}
+
+UIElement::ORIGIN UIElement::getOrigin() {
+	return origin;
+}
+
+void UIElement::setOrigin(UIElement::ORIGIN ori) {
+
+	origin = ori;
 
 }
 
@@ -195,10 +249,11 @@ void UIElement::getAxisAndIntervals(glm::vec2 pts[4], glm::vec2 axis[2], glm::ve
 void UIElement::getTransPts(glm::vec2 pts[4]) {
 
 	glm::mat4 matr = trans.getMatrix();
-	pts[0] = glm::vec2(matr * glm::vec4(-0.5, -0.5, 0, 1));//Bottom left
-	pts[1] = glm::vec2(matr * glm::vec4(0.5, -0.5, 0, 1));//Bottom right
-	pts[2] = glm::vec2(matr * glm::vec4(-0.5, 0.5, 0, 1));//Top left
-	pts[3] = glm::vec2(matr * glm::vec4(0.5, 0.5, 0, 1));//Top right
+	glm::vec4 offs = glm::vec4(getOriginOffset(origin), 1.0f);
+	pts[0] = glm::vec2(matr * (glm::vec4(-0.5, -0.5, 0, 1) + offs));//Bottom left
+	pts[1] = glm::vec2(matr * glm::vec4(0.5, -0.5, 0, 1) + offs);//Bottom right
+	pts[2] = glm::vec2(matr * glm::vec4(-0.5, 0.5, 0, 1) + offs);//Top left
+	pts[3] = glm::vec2(matr * glm::vec4(0.5, 0.5, 0, 1) + offs);//Top right
 
 }
 

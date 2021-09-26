@@ -10,31 +10,16 @@ static Texture MONO_IMAGE;
 static glm::vec2 DEFAULT_SIZE = glm::vec2(64, 64);
 static unsigned char DEFAULT_COLOR[4] = { 255,255,255,255 };
 
-struct Vertex {
-	glm::vec3 position;
-	glm::vec2 texCoord;
-};
+typedef UIElement::Vertex Vertex;
 
-static std::vector<std::vector<Vertex>> g_vertices{
-	{//Center
-		Vertex{ glm::vec3(-0.5f,-0.5f,0), glm::vec2(0,0) },
-		Vertex{ glm::vec3(0.5f,-0.5f,0), glm::vec2(1,0) },
-		Vertex{ glm::vec3(0.5f,0.5f,0), glm::vec2(1,1) },
-		Vertex{ glm::vec3(-0.5f,0.5f,0), glm::vec2(0,1) }
-	}
-};
-
-static const std::vector<GLuint> g_indices{
-	0, 1, 2, 2, 3, 0
-};
+static std::vector<std::vector<Vertex>> g_vertices;
+static std::vector<unsigned int> g_indices;
 
 static std::vector<GLuint> VAO;
 static std::vector<GLuint> VBO;
 static std::vector<GLuint> EBO;
 
-void prepareVertexArray();
-
-Image::Image(Display* d) : UIElement(d) {
+Image::Image(EventManager* d) : UIElement(d) {
 
 	prepareVertexArray();
 
@@ -51,35 +36,21 @@ Image::Image(Display* d) : UIElement(d) {
 
 }
 
+Image::Image(const Texture& tex, EventManager* d) : Image(d) {
+
+	texture = tex;
+	setSize(texture.getDimensions());
+
+}
+
 void Image::onEvent(Event* e) {
 
 	UIElement::onEvent(e);
 
 	if (e->type == EVENTTYPE::MOUSE_BUTTON) {
 		MouseButtonEvent& me = *((MouseButtonEvent*)e);
-		if (me.btn == MOUSEBUTTON::LEFT && !me.press) {
-			/*if (collides(glm::vec2(me.pos[0], me.pos[1]))) {
-				tint = glm::vec3(1,1,1) - tint;
-			}*/
-		}
+		/* TODO: Handle mouse events */
 	}
-
-}
-
-ORIGIN Image::getOrigin() {
-	return origin;
-}
-
-void Image::setOrigin(ORIGIN ori) {
-
-	origin = ori;
-
-}
-
-Image::Image(const Texture& tex, Display* d) : Image(d) {
-
-	texture = tex;
-	setSize(texture.getDimensions());
 
 }
 
@@ -125,26 +96,20 @@ void Image::drawStatic() {
 
 }
 
-void prepareVertexArray() {
+void Image::prepareVertexArray() {
+	/* Initialize static variables if necessary */
 	if (VAO.size() == 0) {
 
-		const glm::vec3 offsets[] = {
-			glm::vec3(0,-0.5f,0),//Top
-			glm::vec3(0,0.5f,0),//Bottom
-			glm::vec3(-0.5f,0,0),//Right
-			glm::vec3(0.5f,0,0),//Left
-			glm::vec3(-0.5f,-0.5f,0),//TopRight
-			glm::vec3(-0.5f,0.5f,0),//BottomRight
-			glm::vec3(0.5f,-0.5f,0),//TopLeft
-			glm::vec3(0.5f,0.5f,0),//BottomLeft
-		};
+		g_indices = getIndices();
 
 		/* Create meshes for all corners */
-		for (int i = 0; i < (int)ORIGIN::MAX_ORIGINS; ++i) {
+		for (int i = 0; i < (int)UIElement::ORIGIN::MAX_ORIGINS; ++i) {
 			std::vector<Vertex> newVerts;
-			for (int j = 0; j < g_vertices[0].size(); ++j) {
-				Vertex vert = g_vertices[0][j];
-				vert.position += offsets[i];
+			const std::vector<Vertex>& defaultVerts = getVertices();
+			glm::vec3 offs = getOriginOffset((UIElement::ORIGIN)i);
+			for (int j = 0; j < defaultVerts.size(); ++j) {
+				Vertex vert = defaultVerts[j];
+				vert.position += offs;
 				newVerts.push_back(vert);
 			}
 			g_vertices.push_back(newVerts);

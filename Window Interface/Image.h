@@ -3,20 +3,11 @@
 #include "Texture.h"
 #include "UIElement.h"
 
-/// <summary>
-	/// Origin position of image
-	/// </summary>
-enum class ORIGIN {
-	CENTER, TOP, BOTTOM, RIGHT, LEFT,
-	TOPRIGHT, BOTTOMRIGHT, TOPLEFT, BOTTOMLEFT,
-	MAX_ORIGINS
-};
-
 class Image : public UIElement {
 public:
 
-	Image(Display* = nullptr);
-	Image(const Texture&, Display* = nullptr);
+	Image(EventManager* = nullptr);
+	Image(const Texture&, EventManager* = nullptr);
 	
 	/// <summary>
 	/// Draw static square vertex array
@@ -52,18 +43,6 @@ public:
 	/// <returns>Texture</returns>
 	Texture getTexture();
 
-	/// <summary>
-	/// Get origin position of image
-	/// </summary>
-	/// <returns>Origin enum</returns>
-	ORIGIN getOrigin();
-
-	/// <summary>
-	/// Set origin position of image
-	/// </summary>
-	/// <param name=""></param>
-	void setOrigin(ORIGIN);
-
 protected:
 
 	Texture texture;
@@ -71,7 +50,8 @@ protected:
 
 private:
 
-	ORIGIN origin = ORIGIN::CENTER;
+	void prepareVertexArray();
+
 	glm::vec3 tint = glm::vec3(1, 1, 1);
 
 };
