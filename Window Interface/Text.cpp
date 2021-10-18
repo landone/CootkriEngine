@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "UIShader.h"
 #include "Resources.h"
+#include "Renderer.h"
 
 #include <GL/glew.h>
 
@@ -64,6 +65,7 @@ void Text::drawText() {
 	//Dimensions of the final text
 	glm::vec2 dim = font.getDimensions() / CHAR_LEN;
 	dim.x *= len;
+	glViewport(0, 0, dim.x, dim.y);
 	texture.bind();
 	texture.setDimensions(dim);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.getID(), 0);
@@ -78,6 +80,9 @@ void Text::drawText() {
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(origClear[0], origClear[1], origClear[2], origClear[3]);
+
+	glm::mat4 origViewMat = shader.getViewMatrix();
+	shader.setViewMatrix(glm::mat4(1));
 
 	//Draw characters to texture
 	shader.setTint(1, 1, 1);
@@ -97,9 +102,8 @@ void Text::drawText() {
 
 	//Restore buffer & dimensions
 	shader.bindBuffer(prevBound);
+	shader.setViewMatrix(origViewMat);
 	shader.setTexMod();
 	glViewport(origDims[0], origDims[1], origDims[2], origDims[3]);
-
-	setSize(dim);
 
 }

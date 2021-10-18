@@ -78,9 +78,9 @@ Texture Image::getTexture() {
 
 }
 
-void Image::draw() {
+void Image::draw(Shader* shd) {
 
-	UIShader& shader = UIShader::get();
+	UIShader& shader = *(UIShader*)shd;
 	shader.setTint(tint);
 	shader.setTransMatrix(getMatrix());
 	texture.bind();

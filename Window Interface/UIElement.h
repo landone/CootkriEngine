@@ -29,11 +29,6 @@ public:
 	UIElement(EventManager* evtM = nullptr);
 
 	/// <summary>
-	/// Element draw function prototype
-	/// </summary>
-	virtual void draw() {};
-
-	/// <summary>
 	/// Set relative or absolute position. (0,0) is center.
 	/// </summary>
 	/// <param name="pos">Position vector</param>

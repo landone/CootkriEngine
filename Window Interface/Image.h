@@ -2,8 +2,9 @@
 
 #include "Texture.h"
 #include "UIElement.h"
+#include "Drawable.h"
 
-class Image : public UIElement {
+class Image : public UIElement, public Drawable {
 public:
 
 	Image(EventManager* = nullptr);
@@ -17,7 +18,8 @@ public:
 	/// <summary>
 	/// Draw image to current buffer
 	/// </summary>
-	void draw() override;
+	/// <param name="Shader"></param>
+	void draw(Shader*) override;
 
 	/// <summary>
 	/// Tint image a color

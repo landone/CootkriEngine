@@ -24,8 +24,8 @@ public:
 	void setTint(float r, float g, float b);
 	//Offset or scale texture
 	void setTexMod(float xOffs=0, float yOffs=0, float xScale=1, float yScale=1);
-	//Set UI draw layer from 0 to 1. Smaller drawn on top
-	void setLayer(float);
+	void setViewMatrix(const glm::mat4&);
+	glm::mat4 getViewMatrix();
 
 protected:
 
@@ -35,6 +35,8 @@ private:
 
 	//Update view matrix with display size
 	void updateViewMatrix(glm::vec2 winSize);
+
+	glm::mat4 viewMat;
 
 	UIShader();
 
