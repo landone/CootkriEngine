@@ -2,6 +2,8 @@
 
 #include "Shader.h"
 
+class Shader;
+
 class Drawable {
 public:
 

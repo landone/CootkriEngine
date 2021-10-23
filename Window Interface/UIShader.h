@@ -1,18 +1,23 @@
 #pragma once
 
 #include "Shader.h"
-#include "Event.h"
 
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
 
-class UIShader : public Shader, private EventListener {
+class UIShader : public Shader {
 public:
 
-	UIShader(EventManager* = nullptr);
+	UIShader();
 
 	//Get global UI shader
 	static UIShader& get();
+
+	/// <summary>
+	/// Prepare UIShader for use in a renderer.
+	/// </summary>
+	/// <param name="renderer"></param>
+	void bind(Renderer*) override;
 
 	//Index of which active texture to use
 	void setTextureIndex(unsigned int);
@@ -27,17 +32,11 @@ public:
 	void setViewMatrix(const glm::mat4&);
 	glm::mat4 getViewMatrix();
 
-protected:
-
-	void onEvent(Event*) override;
-
 private:
 
 	//Update view matrix with display size
 	void updateViewMatrix(glm::vec2 winSize);
 
 	glm::mat4 viewMat;
-
-	UIShader();
 
 };

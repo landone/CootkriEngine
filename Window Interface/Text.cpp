@@ -11,6 +11,7 @@ static const char* DEFAULT_FONT_PATH = "./textures/ascii.png";
 static const float CHAR_LEN = 16.0f;
 static const float CHAR_SZ = 1.0f / CHAR_LEN;
 static unsigned int buffer = 0;
+static Renderer* textRender = nullptr;
 
 Text::Text() {
 
@@ -49,47 +50,39 @@ void Text::setText(const std::string& str) {
 
 void Text::drawText() {
 
-	UIShader& shader = UIShader::get();
-	shader.bind();
-	//Remember previously bound buffer
-	GLuint prevBound = shader.getBuffer();
-	//Remember original viewport dimensions
-	GLint origDims[4] = { 0 };
-	glGetIntegerv(GL_VIEWPORT, origDims);
-	//Bind new buffer
-	shader.bindBuffer(buffer);
-	Texture& font = (*DEFAULT_FONT);
+	if (textRender == nullptr) {
+		textRender = new Renderer(&UIShader::get());
+	}
 
-	//Prepare texture
-	int len = (int)contents.length();
 	//Dimensions of the final text
-	glm::vec2 dim = font.getDimensions() / CHAR_LEN;
-	dim.x *= len;
-	glViewport(0, 0, dim.x, dim.y);
-	texture.bind();
-	texture.setDimensions(dim);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.getID(), 0);
+	glm::vec2 dim = DEFAULT_FONT->getDimensions() / CHAR_LEN;
+	dim.x *= contents.length();
 
+	textRender->setClearColor(glm::vec4(1, 0, 0, 1));
+	textRender->add((Drawable*)this);
+	textRender->addTexture(texture);
+	textRender->setSize(dim);
+	textRender->draw(customDraw, this);
+	textRender->removeTexture(texture);
+	textRender->remove((Drawable*)this);
+
+}
+
+void Text::customDraw(Renderer* render, void* data) {
+
+	Text& me = *(Text*)data;
+	Texture& font = (*DEFAULT_FONT);
+	int len = (int)me.contents.length();
+	
 	font.bind();
 	Transform trans;
-	glViewport(0, 0, (GLsizei)dim.x, (GLsizei)dim.y);
-
-	//Clear and restore original clear color
-	GLfloat origClear[4];
-	glGetFloatv(GL_COLOR_CLEAR_VALUE, origClear);
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(origClear[0], origClear[1], origClear[2], origClear[3]);
-
-	glm::mat4 origViewMat = shader.getViewMatrix();
+	UIShader& shader = *(UIShader*)render->getShader();
 	shader.setViewMatrix(glm::mat4(1));
 
-	//Draw characters to texture
 	shader.setTint(1, 1, 1);
 	trans.setScale(glm::vec3(2.0f / len, 2, 1));
-	for (int i = 0; i < len; i++) {
-
-		char c = contents[i];
+	for (int i = 0; i < len; ++i) {
+		char c = me.contents[i];
 		//Select correct character from image
 		shader.setTexMod((c % (int)CHAR_LEN) * CHAR_SZ, 1.0f - CHAR_SZ - (c / (int)CHAR_LEN) * CHAR_SZ, CHAR_SZ, CHAR_SZ);
 		//Set position from left to right and adjust for centered mesh
@@ -97,13 +90,9 @@ void Text::drawText() {
 		//Draw
 		shader.setTransMatrix(trans.getMatrix());
 		Image::drawStatic();
-
 	}
 
-	//Restore buffer & dimensions
-	shader.bindBuffer(prevBound);
-	shader.setViewMatrix(origViewMat);
+	//Restore texture mod
 	shader.setTexMod();
-	glViewport(origDims[0], origDims[1], origDims[2], origDims[3]);
 
 }

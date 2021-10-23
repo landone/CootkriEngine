@@ -16,6 +16,12 @@ private:
 	//Draws text to the image's texture
 	void drawText();
 
+	/// <summary>
+	/// Custom draw function passed to renderer.
+	/// Used for drawing text, not the resulting image.
+	/// </summary>
+	static void customDraw(Renderer*, void*);
+
 	std::string contents;
 
 };

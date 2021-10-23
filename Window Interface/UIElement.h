@@ -3,14 +3,18 @@
 #include "Display.h"
 #include "Event.h"
 #include "Transform.h"
+#include "Renderer.h"
+#include "Drawable.h"
 
 #include <glm/glm.hpp>
 #include <vector>
 
+class Renderer;
+
 /// <summary>
 /// User interface element to control display-based positioning.
 /// </summary>
-class UIElement : public EventListener {
+class UIElement : public Drawable {
 public:
 
 	/// <summary>
@@ -26,7 +30,7 @@ public:
 	/// User interface element
 	/// </summary>
 	/// <param name="evtM">EvtManager to use. (Main display if null)</param>
-	UIElement(EventManager* evtM = nullptr);
+	UIElement();
 
 	/// <summary>
 	/// Set relative or absolute position. (0,0) is center.
@@ -47,6 +51,12 @@ public:
 	/// </summary>
 	/// <param name="rad">Radians to rotate by.</param>
 	void setRot(float rad);
+
+	/// <summary>
+	/// Renderer to use for screen coordinate calculations.
+	/// </summary>
+	/// <param name="renderer"></param>
+	void setRenderer(Renderer*);
 
 	/// <summary>
 	/// Get relative or absolute position.
@@ -100,6 +110,8 @@ public:
 	/// <param name=""></param>
 	void setOrigin(ORIGIN);
 
+	virtual void draw(Shader*) override {};
+
 	struct Vertex {
 		glm::vec3 position;
 		glm::vec2 texCoord;
@@ -118,8 +130,6 @@ protected:
 
 	static const std::vector<unsigned int>& getIndices();
 
-	void onEvent(Event*) override;
-
 	/// <summary>
 	/// Origin anchor point of UI element
 	/// </summary>
@@ -132,6 +142,7 @@ private:
 	glm::vec2 relSize = glm::vec2(0, 0);
 	glm::vec2 absSize = glm::vec2(0, 0);
 	Transform trans;
+	Renderer* renderer = nullptr;
 
 	/// <summary>
 	/// For rectangle-defining points, get side-axis with projected intervals respectfully.

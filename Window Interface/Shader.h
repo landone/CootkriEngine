@@ -2,6 +2,11 @@
 
 #include <vector>
 
+#include "Renderer.h"
+
+class Renderer;
+
+
 class Shader {
 public:
 
@@ -18,8 +23,11 @@ public:
 
 	//Load a shader using strings
 	void load(const char* vertex, const char* frag, const char* geom = nullptr);
-	//Prepare shader for use
-	void bind();
+	/// <summary>
+	/// Prepare shader for use in a renderer.
+	/// </summary>
+	/// <param name="renderer"></param>
+	virtual void bind(Renderer*);
 	//Allocate a uniform
 	unsigned int createUniform(const char* name);
 	//Allocate an attribute

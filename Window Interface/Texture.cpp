@@ -6,12 +6,6 @@
 
 static const unsigned int BMP_HEADER_SIZE = 14;
 
-Texture::Texture() {
-
-	createTexture();
-
-}
-
 Texture::Texture(const std::string& path) {
 
 	int numComp;

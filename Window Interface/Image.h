@@ -4,11 +4,11 @@
 #include "UIElement.h"
 #include "Drawable.h"
 
-class Image : public UIElement, public Drawable {
+class Image : public UIElement {
 public:
 
-	Image(EventManager* = nullptr);
-	Image(const Texture&, EventManager* = nullptr);
+	Image();
+	Image(const Texture&);
 	
 	/// <summary>
 	/// Draw static square vertex array
@@ -48,7 +48,6 @@ public:
 protected:
 
 	Texture texture;
-	void onEvent(Event*) override;
 
 private:
 

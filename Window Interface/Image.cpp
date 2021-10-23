@@ -19,7 +19,7 @@ static std::vector<GLuint> VAO;
 static std::vector<GLuint> VBO;
 static std::vector<GLuint> EBO;
 
-Image::Image(EventManager* d) : UIElement(d) {
+Image::Image() {
 
 	prepareVertexArray();
 
@@ -32,25 +32,12 @@ Image::Image(EventManager* d) : UIElement(d) {
 	texture = MONO_IMAGE;
 	setSize(DEFAULT_SIZE);
 
-	addType(EVENTTYPE::MOUSE_BUTTON);
-
 }
 
-Image::Image(const Texture& tex, EventManager* d) : Image(d) {
+Image::Image(const Texture& tex) : Image() {
 
 	texture = tex;
 	setSize(texture.getDimensions());
-
-}
-
-void Image::onEvent(Event* e) {
-
-	UIElement::onEvent(e);
-
-	if (e->type == EVENTTYPE::MOUSE_BUTTON) {
-		MouseButtonEvent& me = *((MouseButtonEvent*)e);
-		/* TODO: Handle mouse events */
-	}
 
 }
 

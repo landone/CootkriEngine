@@ -10,29 +10,13 @@
 class Tester : public EventListener {
 public:
 
-	UIElement* el[2] = { nullptr, nullptr };
-
 	Tester() {
 		setParent(Display::getMain());
-		addType(EVENTTYPE::DISPLAY_FRAME);
-		addType(EVENTTYPE::MOUSE_BUTTON);
 	}
 
 protected:
 
 	void onEvent(Event* e) override {
-		
-		if (e->type == EVENTTYPE::MOUSE_BUTTON) {
-			MouseButtonEvent me = *((MouseButtonEvent*)e);
-			if (me.press) {
-				if (me.btn == MOUSEBUTTON::LEFT) {
-				}
-				else if (me.btn == MOUSEBUTTON::RIGHT) {
-				}
-			}
-		}
-		else {
-		}
 	}
 
 };
@@ -86,10 +70,7 @@ int main() {
 	text.setSize(glm::vec2(2, 0), true);
 	text.setText("TEST STRING");
 	uiRender.add(&text);
-
-	Tester test;
-	test.el[0] = &lPanel;
-	test.el[1] = &rPanel;
+	
 
 	clock_t time = clock();
 	int frameCt = 0;

@@ -6,7 +6,7 @@
 class Texture {
 public:
 
-	Texture();
+	Texture() {}
 	//Load texture from file
 	Texture(const std::string& path);
 	//Load texture from memory

@@ -66,7 +66,7 @@ void Shader::bindBuffer(unsigned int id) {
 	glDrawBuffers(1, &attachment);
 }
 
-void Shader::bind() {
+void Shader::bind(Renderer* render) {
 
 	glUseProgram(program);
 

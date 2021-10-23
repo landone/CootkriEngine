@@ -1,8 +1,5 @@
 #include "UIElement.h"
 
-#define getPixelRatio()		(((Display*)getParent())->getPixelToScreen())
-#define getScreenSpace()	(((Display*)getParent())->getScreenSpace())
-
 typedef UIElement::Vertex Vertex;
 
 static std::vector<Vertex> g_vertices{
@@ -29,13 +26,7 @@ static const glm::vec3 g_offsets[] = {
 			glm::vec3(0.5f,0.5f,0),//BottomLeft
 };
 
-UIElement::UIElement(EventManager* evtM) {
-
-	if (evtM == nullptr) {
-		evtM = Display::getMain();
-	}
-	setParent(evtM);
-	addType(EVENTTYPE::DISPLAY_RESIZE);
+UIElement::UIElement() {
 
 	//Transform defaults with scale of 1, zero this
 	trans.setScale(glm::vec3(0, 0, 0));
@@ -60,18 +51,6 @@ const std::vector<unsigned int>& UIElement::getIndices() {
 
 }
 
-void UIElement::onEvent(Event* e) {
-
-	if (e->type == EVENTTYPE::DISPLAY_RESIZE) {
-		//Fix absolute coordinates on resize
-		glm::vec2 ratio = getPixelRatio();
-		glm::vec2 space = getScreenSpace() / 2.0f;
-		trans.setPos(glm::vec3(relPos * space + absPos * ratio, 0));
-		trans.setScale(glm::vec3(relSize * space + absSize * ratio, 1));
-	}
-
-}
-
 void UIElement::setPos(const glm::vec2& pos, bool rel) {
 
 	if (rel) {
@@ -80,10 +59,6 @@ void UIElement::setPos(const glm::vec2& pos, bool rel) {
 	else {
 		absPos = pos;
 	}
-
-	glm::vec2 ratio = getPixelRatio();
-	glm::vec2 space = getScreenSpace() / 2.0f;
-	trans.setPos(glm::vec3(relPos * space + absPos * ratio, 0));
 
 }
 
@@ -96,15 +71,17 @@ void UIElement::setSize(const glm::vec2& scale, bool rel) {
 		absSize = scale;
 	}
 
-	glm::vec2 ratio = getPixelRatio();
-	glm::vec2 space = getScreenSpace() / 2.0f;
-	trans.setScale(glm::vec3(abs(relSize * space + absSize * ratio), 1));
-
 }
 
 void UIElement::setRot(float rad) {
 
 	trans.setRot(glm::vec3(0, 0, rad));
+
+}
+
+void UIElement::setRenderer(Renderer* rend) {
+
+	renderer = rend;
 
 }
 
@@ -128,6 +105,14 @@ float UIElement::getRot() {
 
 glm::mat4 UIElement::getMatrix() {
 
+	if (renderer == nullptr) {
+		trans.setPos(glm::vec3(relSize,0));
+		trans.setScale(glm::vec3(absSize, 1));
+	}
+	else {
+		trans.setPos(glm::vec3(renderer->makeScreenCoords(relPos,absPos), 0));
+		trans.setScale(glm::vec3(glm::abs(renderer->makeScreenCoords(relSize,absSize)), 1));
+	}
 	return trans.getMatrix();
 
 }
@@ -248,7 +233,7 @@ void UIElement::getAxisAndIntervals(glm::vec2 pts[4], glm::vec2 axis[2], glm::ve
 
 void UIElement::getTransPts(glm::vec2 pts[4]) {
 
-	glm::mat4 matr = trans.getMatrix();
+	glm::mat4 matr = getMatrix();
 	glm::vec4 offs = glm::vec4(getOriginOffset(origin), 1.0f);
 	pts[0] = glm::vec2(matr * (glm::vec4(-0.5, -0.5, 0, 1) + offs));//Bottom left
 	pts[1] = glm::vec2(matr * glm::vec4(0.5, -0.5, 0, 1) + offs);//Bottom right
