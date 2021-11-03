@@ -10,7 +10,6 @@ static Texture* DEFAULT_FONT = nullptr;
 static const char* DEFAULT_FONT_PATH = "./textures/ascii.png";
 static const float CHAR_LEN = 16.0f;
 static const float CHAR_SZ = 1.0f / CHAR_LEN;
-static unsigned int buffer = 0;
 static Renderer* textRender = nullptr;
 
 Text::Text() {
@@ -21,7 +20,6 @@ Text::Text() {
 		char* fontImage = LoadResource(DEFAULT_FONT_PATH, &size);
 		DEFAULT_FONT = new Texture((const unsigned char*)fontImage, size);
 		delete[] fontImage;
-		buffer = Shader::createBuffer();
 
 	}
 
@@ -58,9 +56,9 @@ void Text::drawText() {
 	glm::vec2 dim = DEFAULT_FONT->getDimensions() / CHAR_LEN;
 	dim.x *= contents.length();
 
-	textRender->setClearColor(glm::vec4(1, 0, 0, 1));
 	textRender->add((Drawable*)this);
 	textRender->addTexture(texture);
+	textRender->setClearColor(glm::vec4(1, 0, 0, 1));
 	textRender->setSize(dim);
 	textRender->draw(customDraw, this);
 	textRender->removeTexture(texture);

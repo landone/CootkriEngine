@@ -66,6 +66,10 @@ glm::vec3 Transform::getRot() {
 	return rotation;
 }
 
+glm::mat4 Transform::getRotMatrix() {
+	return rotMat;
+}
+
 glm::vec3 Transform::getScale() {
 	return scale;
 }

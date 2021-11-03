@@ -238,7 +238,6 @@ void Display::poll() {
 				glm::vec2 size = disp.getSize();
 				disp.screenWidth = 2.0f * size.x / size.y;
 				disp.pxToScreen = glm::vec2(disp.screenWidth, 2.0f) / size;
-				glViewport(0, 0, e.window.data1, e.window.data2);
 				DisplayResizeEvent evt(e.window.data1, e.window.data2);
 				disp.sendEvent(&evt);
 				break;

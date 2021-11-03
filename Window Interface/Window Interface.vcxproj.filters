@@ -63,6 +63,12 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryShader.cpp">
+      <Filter>Graphics\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Event.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="Drawable.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryShader.h">
+      <Filter>Graphics\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

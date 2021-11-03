@@ -62,8 +62,6 @@ void Shader::deleteBuffer(unsigned int id) {
 
 void Shader::bindBuffer(unsigned int id) {
 	glBindFramebuffer(GL_FRAMEBUFFER, id);
-	static unsigned int attachment = GL_COLOR_ATTACHMENT0;
-	glDrawBuffers(1, &attachment);
 }
 
 void Shader::bind(Renderer* render) {

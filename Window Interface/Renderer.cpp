@@ -32,6 +32,7 @@ Renderer::~Renderer() {
 		for (Texture& tex : textures) {
 			Texture::deleteTexture(tex.getID());
 		}
+		Texture::deleteTexture(depthTexture);
 	}
 
 }
@@ -40,8 +41,6 @@ unsigned int Renderer::addTexture() {
 
 	Texture newTex;
 	newTex.setID(Texture::createTexture());
-	newTex.bind();
-	newTex.setDimensions(dimensions);
 	
 	addTexture(newTex);
 
@@ -55,7 +54,17 @@ void Renderer::addTexture(Texture tex) {
 		makeBuffer();
 	}
 
+	shader->bind(nullptr);
+	shader->bindBuffer(bufferID);
+	tex.bind();
+	tex.setDimensions(dimensions);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + textures.size(), GL_TEXTURE_2D, tex.getID(), 0);
 	textures.push_back(tex);
+	if (textureAttachments.size() < textures.size()) {
+		textureAttachments.push_back(textureAttachments.size() + GL_COLOR_ATTACHMENT0);
+	}
+
+	glDrawBuffers(textures.size(), &textureAttachments[0]);
 
 }
 
@@ -96,6 +105,13 @@ void Renderer::setShader(Shader* shd) {
 unsigned int Renderer::makeBuffer() {
 
 	bufferID = Shader::createBuffer();
+	shader->bindBuffer(bufferID);
+
+	glGenTextures(1, &depthTexture);
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, dimensions.x, dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+
 	return bufferID;
 
 }
@@ -113,6 +129,9 @@ void Renderer::setSize(glm::vec2 size) {
 		tex.bind();
 		tex.setDimensions(size);
 	}
+
+	glBindTexture(GL_TEXTURE_2D, depthTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, size.x, size.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 }
 
@@ -203,15 +222,9 @@ void Renderer::prepareToDraw() {
 
 	shader->bind(this);
 	shader->bindBuffer(bufferID);
+
 	glViewport(0, 0, (GLsizei)dimensions.x, (GLsizei)dimensions.y);
 	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	int counter = 0;
-	for (Texture& tex : textures) {
-		tex.bind();
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + counter, GL_TEXTURE_2D, tex.getID(), 0);
-		++counter;
-	}
 
 }

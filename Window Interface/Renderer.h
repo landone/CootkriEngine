@@ -116,9 +116,11 @@ private:
 	Display* display = nullptr;
 	Shader* shader = nullptr;
 	unsigned int bufferID = 0;
+	unsigned int depthTexture = 0;
 	glm::vec4 clearColor = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	std::list<Drawable*> elemList;
 	std::list<Texture> textures;
+	std::vector<unsigned int> textureAttachments;
 	glm::vec2 dimensions = glm::vec2(1,1);
 
 	void onEvent(Event*) override;

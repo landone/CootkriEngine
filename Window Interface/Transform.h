@@ -12,6 +12,8 @@ public:
 	glm::vec3 getPos();
 	//Get rotation
 	glm::vec3 getRot();
+	//Get rotation matrix
+	glm::mat4 getRotMatrix();
 	//Get scale
 	glm::vec3 getScale();
 

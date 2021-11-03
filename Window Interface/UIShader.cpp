@@ -8,10 +8,10 @@
 
 static UIShader* global = nullptr;
 static const char* VERT_SHDR = "./shaders/UIShader.vs";
-static const char* FRAG_SHDR = "./shaders/UIShader.fsh";
+static const char* FRAG_SHDR = "./shaders/UIShader.fs";
 
-char* vertexShader = nullptr;
-char* fragmentShader = nullptr;
+static char* vertexShader = nullptr;
+static char* fragmentShader = nullptr;
 
 UIShader& UIShader::get() {
 
@@ -35,6 +35,7 @@ UIShader::UIShader() {
 
 	createAttribute("position");
 	createAttribute("texCoord");
+
 	createUniform("transMatrix");
 	createUniform("texMap");
 	createUniform("tint");
