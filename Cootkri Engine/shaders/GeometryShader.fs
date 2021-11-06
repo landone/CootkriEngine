@@ -9,14 +9,13 @@ layout (location = 2) out vec4 gColor;
 in vec2 TexCoords;
 in vec3 FragPos;
 in vec3 Normal;
-flat in int TexID;
 
 uniform sampler2D textures[MAX_TEXTURES];
 uniform vec3 tint;
 
 void main(){
 	
-	vec4 origColor = texture(textures[TexID], TexCoords);
+	vec4 origColor = texture(textures[0], TexCoords);
 	if(origColor.a < 1){
 		discard;
 	}

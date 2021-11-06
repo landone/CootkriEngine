@@ -69,6 +69,9 @@
     <ClCompile Include="GeometryShader.cpp">
       <Filter>Graphics\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectLoader.cpp">
+      <Filter>Graphics\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Event.h">
@@ -127,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="GeometryShader.h">
       <Filter>Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectLoader.h">
+      <Filter>Graphics\Tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

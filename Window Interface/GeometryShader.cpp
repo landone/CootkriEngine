@@ -21,7 +21,6 @@ GeometryShader::GeometryShader() : Shader() {
 	createAttribute("position");
 	createAttribute("texCoord");
 	createAttribute("normal");
-	createAttribute("texID");
 
 	uniforms[TRANS_MAT] = createUniform("transMatrix");
 	uniforms[ROT_MAT] = createUniform("rotMatrix");

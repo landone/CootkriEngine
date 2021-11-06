@@ -71,22 +71,23 @@ int main() {
 	rPanel.setTexture(normalTex);
 	uiRender.add(&rPanel);
 
-	static const glm::mat4 lookAtMat = glm::lookAt(glm::vec3(0, 0, 1), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	static const glm::mat4 lookAtMat = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	glm::mat4 viewMat = glm::perspective(atan(1.0f) * 2.0f, 16.0f / 9.0f, 0.001f, 10000.0f) * lookAtMat;
 	geomShader->setViewMatrix(viewMat);
 
 	Transform trans;
-	trans.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	//trans.setScale(glm::vec3(2.5f, 2.5f, 2.5f));
+	trans.setScale(glm::vec3(1.2f, 1.2f, 1.2f));
 	trans.setPos(glm::vec3(0, -0.5, -0.5));
 	geomShader->setTransMatrix(trans.getMatrix());
 	geomShader->setRotationMatrix(trans.getRotMatrix());
 
 	Mesh mesh;
-	mesh.Load("models/zelda_pot.obj");
+	mesh.Load("models/Thwomp.obj");
 	Tester tester(mesh);
 	geomRender.add(&tester);
 	geomRender.setClearColor(glm::vec4(0.4, 0.4, 0.4, 1));
-	geomRender.setSize(glm::vec2(400,400));
+	geomRender.setSize(glm::vec2(400,300));
 
 	
 	while (disp.isOpen()) {

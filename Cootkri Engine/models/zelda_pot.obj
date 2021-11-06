@@ -1,6 +1,6 @@
 # Blender v2.93.5 OBJ File: ''
 # www.blender.org
-mtllib zelda_pot.mtl
+mtllib .\\models\\zelda_pot.mtl
 o pot_base
 v 0.000000 -0.383460 0.002950
 v -0.899170 -0.004860 0.440710
