@@ -14,8 +14,8 @@ void Shader::load(const char* vertex, const char* fragment, const char* geometry
 
 	program = glCreateProgram();
 	shaders[0] = CreateShader(vertex, GL_VERTEX_SHADER);
-	glAttachShader(program, shaders[0]);
 	shaders[1] = CreateShader(fragment, GL_FRAGMENT_SHADER);
+	glAttachShader(program, shaders[0]);
 	glAttachShader(program, shaders[1]);
 
 	if (geometry) {

@@ -10,8 +10,8 @@ static UIShader* global = nullptr;
 static const char* VERT_SHDR = "./shaders/UIShader.vs";
 static const char* FRAG_SHDR = "./shaders/UIShader.fs";
 
-static char* vertexShader = nullptr;
-static char* fragmentShader = nullptr;
+static std::string vertexShader;
+static std::string fragmentShader;
 
 UIShader& UIShader::get() {
 
@@ -26,12 +26,12 @@ UIShader& UIShader::get() {
 UIShader::UIShader() {
 
 	//Instantiate shader strings
-	if (vertexShader == nullptr) {
-		vertexShader = LoadResource(VERT_SHDR);
-		fragmentShader = LoadResource(FRAG_SHDR);
+	if (vertexShader.empty()) {
+		vertexShader = LoadTextFile(VERT_SHDR);
+		fragmentShader = LoadTextFile(FRAG_SHDR);
 	}
 
-	load(vertexShader, fragmentShader);
+	load(vertexShader.c_str(), fragmentShader.c_str());
 
 	createAttribute("position");
 	createAttribute("texCoord");

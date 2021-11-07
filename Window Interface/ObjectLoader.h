@@ -29,6 +29,7 @@ public:
 		std::vector<glm::vec2> texCoord;
 		std::vector<glm::vec3> normal;
 		std::map<std::string, Texture> textures;
+		std::string pathway;
 	};
 
 	static bool LoadOBJ(const std::string& pathway, std::vector<Object>& objects, std::vector<Vertex>& vertices);
@@ -42,6 +43,11 @@ private:
 	/// <returns>Vector of substrings</returns>
 	static std::vector<std::string> SplitLine(const std::string& line);
 
+	/// <summary>
+	/// Split a 'face' line into indices used to create a vertex.
+	/// </summary>
+	/// <param name="str"> - String to split</param>
+	/// <returns>Array of unsigned integers found</returns>
 	static std::vector<unsigned int> SplitFaceVertex(const std::string&);
 
 	static bool ParseOBJLine(const std::vector<std::string>& args, std::vector<Object>&, ObjectFileData& d, std::vector<Vertex>&);
@@ -54,6 +60,12 @@ private:
 
 	static bool ParseFace(const std::vector<std::string>& args, std::vector<Object>&, ObjectFileData& d, std::vector<Vertex>&);
 
+	/// <summary>
+	/// Parse an object's material file and load textures into memory.
+	/// </summary>
+	/// <param name="args">Line's arguments</param>
+	/// <param name="data">Temporary object file data structure</param>
+	/// <returns>True on success, false on failure</returns>
 	static bool ParseMaterialFile(const std::vector<std::string>& args, ObjectFileData& d);
 
 };

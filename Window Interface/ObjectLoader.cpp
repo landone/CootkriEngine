@@ -15,6 +15,23 @@ bool ObjectLoader::LoadOBJ(const std::string& pathway, std::vector<Object>& data
 	bool success = true;
 	ObjectFileData counter;
 
+	//Get directory of model pathway passed for loading related files
+	size_t backSlash = pathway.find_last_of('\\');
+	size_t forwardSlash = pathway.find_last_of('/');
+	size_t lastSlash = std::string::npos;
+	if (backSlash != lastSlash && forwardSlash != lastSlash) {
+		lastSlash = std::max(backSlash, forwardSlash);
+	}
+	else if (backSlash != lastSlash) {
+		lastSlash = backSlash;
+	}
+	else if (forwardSlash != lastSlash) {
+		lastSlash = forwardSlash;
+	}
+	if (lastSlash != std::string::npos) {
+		counter.pathway = pathway.substr(0, lastSlash + 1);
+	}
+
 	while (std::getline(file, line)) {
 
 		std::vector<std::string> args = SplitLine(line);
@@ -270,7 +287,7 @@ std::vector<std::string> ObjectLoader::SplitLine(const std::string& line) {
 
 bool ObjectLoader::ParseMaterialFile(const std::vector<std::string>& args, ObjectFileData& counter) {
 
-	std::ifstream file(args[1]);
+	std::ifstream file(counter.pathway + args[1]);
 	if (!file.is_open()) {
 		return false;
 	}
@@ -289,7 +306,7 @@ bool ObjectLoader::ParseMaterialFile(const std::vector<std::string>& args, Objec
 			currentMtl = args[1];
 		}
 		else if (args[0] == "map_Kd") {
-			counter.textures[currentMtl] = Texture(args[1]);
+			counter.textures[currentMtl] = Texture(counter.pathway + args[1]);
 		}
 
 	}

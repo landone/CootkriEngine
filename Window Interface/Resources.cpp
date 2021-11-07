@@ -2,6 +2,7 @@
 
 #include "Resources.h"
 #include <stdio.h>
+#include <fstream>
 
 char* LoadResource(const char* path, int* returnSize) {
 
@@ -26,5 +27,22 @@ char* LoadResource(const char* path, int* returnSize) {
 	}
 
 	return data;
+
+}
+
+std::string LoadTextFile(const char* path) {
+
+	std::ifstream file;
+	std::string output;
+	file.open(path);
+	if (!file.is_open()) {
+		return output;
+	}
+	std::string line;
+	while (std::getline(file, line)) {
+		output += line + '\n';
+	}
+
+	return output;
 
 }

@@ -6,17 +6,17 @@
 static const char* VERT_SHDR = "./shaders/GeometryShader.vs";
 static const char* FRAG_SHDR = "./shaders/GeometryShader.fs";
 
-static char* vertexShader = nullptr;
-static char* fragmentShader = nullptr;
+static std::string vertexShader;
+static std::string fragmentShader;
 
 GeometryShader::GeometryShader() : Shader() {
 
-	if (vertexShader == nullptr) {
-		vertexShader = LoadResource(VERT_SHDR);
-		fragmentShader = LoadResource(FRAG_SHDR);
+	if (vertexShader.empty()) {
+		vertexShader = LoadTextFile(VERT_SHDR);
+		fragmentShader = LoadTextFile(FRAG_SHDR);
 	}
 
-	load(vertexShader, fragmentShader);
+	load(vertexShader.c_str(), fragmentShader.c_str());
 
 	createAttribute("position");
 	createAttribute("texCoord");
