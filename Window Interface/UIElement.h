@@ -1,12 +1,7 @@
 #pragma once
 
-#include "Display.h"
-#include "Event.h"
 #include "Transform.h"
-#include "Renderer.h"
 #include "Drawable.h"
-
-#include <glm/glm.hpp>
 #include <vector>
 
 class Renderer;
@@ -110,7 +105,7 @@ public:
 	/// <param name=""></param>
 	void setOrigin(ORIGIN);
 
-	virtual void draw(Shader*) override {};
+	virtual void draw(void*) override {};
 
 	struct Vertex {
 		glm::vec3 position;
@@ -167,3 +162,5 @@ private:
 	static bool isIntervalOverlap(glm::vec2 int1, glm::vec2 int2);
 
 };
+
+#include "Renderer.h"

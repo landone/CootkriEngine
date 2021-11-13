@@ -1,16 +1,11 @@
 #pragma once
 
-#include <list>
-#include <glm/vec4.hpp>
-
 #include "UIElement.h"
 #include "Display.h"
-#include "Shader.h"
 #include "Texture.h"
-#include "Drawable.h"
-#include "Event.h"
+#include <list>
+#include <vector>
 
-class UIElement;
 class Shader;
 
 class Renderer : private EventListener {
@@ -138,3 +133,5 @@ private:
 	void prepareToDraw();
 
 };
+
+#include "Shader.h"

@@ -1,9 +1,5 @@
 #pragma once
 
-#include "Shader.h"
-
-class Shader;
-
 class Drawable {
 public:
 
@@ -11,6 +7,6 @@ public:
 	/// Abstracted OpenGL draw call.
 	/// </summary>
 	/// <param name="Shader"></param>
-	virtual void draw(Shader*) = 0;
+	virtual void draw(void* shader) = 0;
 
 };

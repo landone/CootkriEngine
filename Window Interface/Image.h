@@ -19,7 +19,7 @@ public:
 	/// Draw image to current buffer
 	/// </summary>
 	/// <param name="Shader"></param>
-	void draw(Shader*) override;
+	void draw(void*) override;
 
 	/// <summary>
 	/// Tint image a color

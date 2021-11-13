@@ -18,7 +18,7 @@ char* LoadResource(const char* path, int* returnSize) {
 	fseek(file, 0, SEEK_END);
 	long size = ftell(file);
 	char* data = new char[size];
-	fseek(file, SEEK_SET, 0);
+	fseek(file, 0, SEEK_SET);
 	fread(data, size, 1, file);
 	fclose(file);
 

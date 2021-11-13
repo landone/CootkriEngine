@@ -5,23 +5,10 @@
 #include <Renderer.h>
 #include <Text.h>
 #include <GeometryShader.h>
-#include <Mesh.h>
+#include "Model.h"
 
 #include <ctime>
 #include <glm/gtc/matrix_transform.hpp>
-
-class Tester : public Drawable {
-public:
-
-	Tester(Mesh& m) : mesh(m) {}
-
-	void draw(Shader*) override { mesh.draw(); }
-
-private:
-
-	Mesh& mesh;
-
-};
 
 int main() {
 
@@ -75,17 +62,15 @@ int main() {
 	glm::mat4 viewMat = glm::perspective(atan(1.0f) * 2.0f, 16.0f / 9.0f, 0.001f, 10000.0f) * lookAtMat;
 	geomShader->setViewMatrix(viewMat);
 
-	Transform trans;
-	//trans.setScale(glm::vec3(2.5f, 2.5f, 2.5f));
-	trans.setScale(glm::vec3(1.2f, 1.2f, 1.2f));
+	Model mdl("models/Majora.obj");
+	Entity ent;
+	ent.addComponent(mdl);
+	Transform& trans = ent.getTrans();
+	trans.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
+	//trans.setScale(glm::vec3(1.2f, 1.2f, 1.2f));
 	trans.setPos(glm::vec3(0, -0.5, -0.5));
-	geomShader->setTransMatrix(trans.getMatrix());
-	geomShader->setRotationMatrix(trans.getRotMatrix());
 
-	Mesh mesh;
-	mesh.Load("models/Thwomp.obj");
-	Tester tester(mesh);
-	geomRender.add(&tester);
+	geomRender.add(&mdl);
 	geomRender.setClearColor(glm::vec4(0.4, 0.4, 0.4, 1));
 	geomRender.setSize(glm::vec2(400,300));
 
@@ -93,8 +78,6 @@ int main() {
 	while (disp.isOpen()) {
 		disp.poll();
 		trans.rotate(glm::vec3(0, 3.1415f / 360.0f, 0));
-		geomShader->setTransMatrix(trans.getMatrix());
-		geomShader->setRotationMatrix(trans.getRotMatrix());
 		geomRender.draw();
 		uiRender.draw();
 		disp.swap();

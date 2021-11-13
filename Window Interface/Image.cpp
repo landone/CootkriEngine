@@ -65,7 +65,7 @@ Texture Image::getTexture() {
 
 }
 
-void Image::draw(Shader* shd) {
+void Image::draw(void* shd) {
 
 	UIShader& shader = *(UIShader*)shd;
 	shader.setTint(tint);
