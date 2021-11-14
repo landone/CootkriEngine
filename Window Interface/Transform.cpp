@@ -30,6 +30,12 @@ glm::mat4 Transform::getMatrix() {
 
 }
 
+bool Transform::isChanged() {
+
+	return changed[0] || changed[1] || changed[2];
+
+}
+
 void Transform::setPos(const glm::vec3& p) {
 
 	position = p;

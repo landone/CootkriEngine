@@ -6,6 +6,7 @@
 #include <Text.h>
 #include <GeometryShader.h>
 #include "Model.h"
+#include "Camera.h"
 
 #include <ctime>
 #include <glm/gtc/matrix_transform.hpp>
@@ -58,19 +59,20 @@ int main() {
 	rPanel.setTexture(normalTex);
 	uiRender.add(&rPanel);
 
-	static const glm::mat4 lookAtMat = glm::lookAt(glm::vec3(0, 0, -2), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	glm::mat4 viewMat = glm::perspective(atan(1.0f) * 2.0f, 16.0f / 9.0f, 0.001f, 10000.0f) * lookAtMat;
-	geomShader->setViewMatrix(viewMat);
-
 	Model mdl("models/Majora.obj");
 	Entity ent;
+	Entity ent2;
+	Camera cam;
+	ent2.getTrans().setPos(glm::vec3(0, 0, -2));
+	ent2.addComponent(cam);
 	ent.addComponent(mdl);
 	Transform& trans = ent.getTrans();
 	trans.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
 	//trans.setScale(glm::vec3(1.2f, 1.2f, 1.2f));
 	trans.setPos(glm::vec3(0, -0.5, -0.5));
 
-	geomRender.add(&mdl);
+	geomRender.add(&ent);
+	geomRender.add(&ent2);
 	geomRender.setClearColor(glm::vec4(0.4, 0.4, 0.4, 1));
 	geomRender.setSize(glm::vec2(400,300));
 

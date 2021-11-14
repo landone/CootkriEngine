@@ -6,7 +6,7 @@
 
 #include <string>
 
-class Model : public Component, public Drawable {
+class Model : public Component {
 public:
 
 	Model(std::string path);

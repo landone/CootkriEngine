@@ -203,6 +203,10 @@ void Renderer::draw() {
 	prepareToDraw();
 
 	for (Drawable* el : elemList) {
+		el->preDraw(shader);
+	}
+
+	for (Drawable* el : elemList) {
 		el->draw(shader);
 	}
 

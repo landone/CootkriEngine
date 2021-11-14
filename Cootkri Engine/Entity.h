@@ -2,11 +2,12 @@
 
 #include <Transform.h>
 #include <list>
+#include <Drawable.h>
 
 #include "Component.h"
 class Component;
 
-class Entity {
+class Entity : public Drawable {
 public:
 
 	~Entity();
@@ -18,6 +19,10 @@ public:
 	void removeAllComponents();
 
 	bool hasComponent(Component& comp);
+
+	void draw(void*) override;
+
+	void preDraw(void*) override;
 
 	Transform& getTrans();
 

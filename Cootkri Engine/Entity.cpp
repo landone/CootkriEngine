@@ -57,6 +57,28 @@ void Entity::removeAllComponents() {
 
 }
 
+void Entity::draw(void* shader) {
+
+	for (Component* comp : components) {
+		if (comp->isDrawable) {
+			Drawable& drawable = *((Drawable*)comp);
+			drawable.draw(shader);
+		}
+	}
+
+}
+
+void Entity::preDraw(void* shader) {
+
+	for (Component* comp : components) {
+		if (comp->isDrawable) {
+			Drawable& drawable = *((Drawable*)comp);
+			drawable.preDraw(shader);
+		}
+	}
+
+}
+
 Entity::~Entity() {
 
 	removeAllComponents();

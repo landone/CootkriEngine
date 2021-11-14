@@ -26,6 +26,8 @@ public:
 	//Set scale
 	void setScale(const glm::vec3&);
 
+	bool isChanged();
+
 
 private:
 

@@ -4,7 +4,7 @@
 
 class Entity;
 
-class Component {
+class Component : public Drawable {
 public:
 
 	~Component();
@@ -13,11 +13,15 @@ public:
 
 	Transform* getTrans();
 
+	virtual void draw(void*) override {}
+
 protected:
 
 	virtual void onAdd() {}
 
 	virtual void onRemove() {}
+
+	bool isDrawable = false;
 
 private:
 

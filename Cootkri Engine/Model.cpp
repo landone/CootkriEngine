@@ -4,6 +4,7 @@
 
 Model::Model(std::string pathway) {
 
+	isDrawable = true;
 	mesh.Load(pathway);
 
 }
