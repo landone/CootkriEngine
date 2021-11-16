@@ -4,7 +4,7 @@
 #include <MouseEvent.h>
 #include <Renderer.h>
 #include <Text.h>
-#include <GeometryShader.h>
+#include "GeometryShader.h"
 #include "Model.h"
 #include "Camera.h"
 

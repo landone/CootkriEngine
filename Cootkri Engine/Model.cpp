@@ -1,6 +1,6 @@
 #include "Model.h"
 
-#include <GeometryShader.h>
+#include "GeometryShader.h"
 
 Model::Model(std::string pathway) {
 

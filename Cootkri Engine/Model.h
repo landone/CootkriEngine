@@ -2,7 +2,7 @@
 
 #include "Component.h"
 #include <Drawable.h>
-#include <Mesh.h>
+#include "Mesh.h"
 
 #include <string>
 

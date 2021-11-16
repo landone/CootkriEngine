@@ -146,9 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GeometryShader.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="ObjectLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -167,9 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drawable.h" />
-    <ClInclude Include="GeometryShader.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="ObjectLoader.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Text.h" />
