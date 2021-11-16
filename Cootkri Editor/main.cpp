@@ -4,9 +4,9 @@
 #include <MouseEvent.h>
 #include <Renderer.h>
 #include <Text.h>
-#include "GeometryShader.h"
-#include "Model.h"
-#include "Camera.h"
+#include <GeometryShader.h>
+#include <Model.h>
+#include <Camera.h>
 
 #include <ctime>
 #include <glm/gtc/matrix_transform.hpp>
@@ -74,9 +74,9 @@ int main() {
 	geomRender.add(&ent);
 	geomRender.add(&ent2);
 	geomRender.setClearColor(glm::vec4(0.4, 0.4, 0.4, 1));
-	geomRender.setSize(glm::vec2(400,300));
+	geomRender.setSize(glm::vec2(400, 300));
 
-	
+
 	while (disp.isOpen()) {
 		disp.poll();
 		trans.rotate(glm::vec3(0, 3.1415f / 360.0f, 0));

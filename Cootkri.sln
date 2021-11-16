@@ -10,6 +10,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cootkri Engine", "Cootkri E
 		{C89AF334-BDA6-4887-A5B6-0BD662B9EEB5} = {C89AF334-BDA6-4887-A5B6-0BD662B9EEB5}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cootkri Editor", "Cootkri Editor\Cootkri Editor.vcxproj", "{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C89AF334-BDA6-4887-A5B6-0BD662B9EEB5} = {C89AF334-BDA6-4887-A5B6-0BD662B9EEB5}
+		{AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B} = {AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +40,14 @@ Global
 		{AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B}.Release|x64.Build.0 = Release|x64
 		{AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B}.Release|x86.ActiveCfg = Release|Win32
 		{AADFA06D-54D2-43AD-B33C-F4ADBBD92F3B}.Release|x86.Build.0 = Release|Win32
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Debug|x64.ActiveCfg = Debug|x64
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Debug|x64.Build.0 = Debug|x64
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Debug|x86.ActiveCfg = Debug|Win32
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Debug|x86.Build.0 = Debug|Win32
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Release|x64.ActiveCfg = Release|x64
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Release|x64.Build.0 = Release|x64
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Release|x86.ActiveCfg = Release|Win32
+		{15CE25C0-5C77-4A7C-ABFE-51206D1B54C3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
