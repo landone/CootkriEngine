@@ -58,13 +58,13 @@ void Renderer::addTexture(Texture tex) {
 	shader->bindBuffer(bufferID);
 	tex.bind();
 	tex.setDimensions(dimensions);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + textures.size(), GL_TEXTURE_2D, tex.getID(), 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + (GLenum)textures.size(), GL_TEXTURE_2D, tex.getID(), 0);
 	textures.push_back(tex);
 	if (textureAttachments.size() < textures.size()) {
-		textureAttachments.push_back(textureAttachments.size() + GL_COLOR_ATTACHMENT0);
+		textureAttachments.push_back((unsigned int)textureAttachments.size() + GL_COLOR_ATTACHMENT0);
 	}
 
-	glDrawBuffers(textures.size(), &textureAttachments[0]);
+	glDrawBuffers((GLsizei)textures.size(), &textureAttachments[0]);
 
 }
 
@@ -109,7 +109,7 @@ unsigned int Renderer::makeBuffer() {
 
 	glGenTextures(1, &depthTexture);
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, dimensions.x, dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, (GLsizei)dimensions.x, (GLsizei)dimensions.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 
 	return bufferID;
@@ -131,7 +131,7 @@ void Renderer::setSize(glm::vec2 size) {
 	}
 
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, size.x, size.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, (GLsizei)size.x, (GLsizei)size.y, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 
 }
 

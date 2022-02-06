@@ -33,6 +33,12 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="LightShader.cpp">
+      <Filter>Graphics\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -55,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Graphics\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

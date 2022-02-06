@@ -16,7 +16,8 @@ private:
 
 	enum UNIFORMS {
 		TRANS_MAT = 0, ROT_MAT, VIEW_MAT,
-		TEXTURES, TINT, MAX_UNIFORMS
+		TEXTURES, TINT,
+		MAX_UNIFORMS
 	};
 	unsigned int uniforms[(int)UNIFORMS::MAX_UNIFORMS];
 

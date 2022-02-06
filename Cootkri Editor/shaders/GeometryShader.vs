@@ -14,7 +14,7 @@ void main(){
 
 	FragPos = vec3(transMatrix * vec4(position, 1.0));
 	TexCoords = texCoord;
-	Normal = vec3(rotMatrix * vec4(normal, 1.0));
+	Normal = vec3(rotMatrix * vec4(normal, 0.0));
 	gl_Position = viewMatrix * vec4(FragPos, 1.0);
 
 }

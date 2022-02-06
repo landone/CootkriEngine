@@ -9,6 +9,8 @@ public:
 
 	Image();
 	Image(const Texture&);
+
+	bool isStatic = false;
 	
 	/// <summary>
 	/// Draw static square vertex array
@@ -52,6 +54,7 @@ protected:
 private:
 
 	void prepareVertexArray();
+	void createFullscreenMesh();
 
 	glm::vec3 tint = glm::vec3(1, 1, 1);
 

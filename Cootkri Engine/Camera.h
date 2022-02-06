@@ -23,7 +23,7 @@ private:
 
 	float near = 0.001f;
 	float far = 10000.0f;
-	float aspect = 16.0 / 9.0f;
+	float aspect = 16.0f / 9.0f;
 	float fovY = 3.1415f / 3.0f;
 
 	glm::mat4 perspective = glm::mat4(1.0f);

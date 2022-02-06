@@ -26,6 +26,6 @@ protected:
 private:
 
 	friend Entity;
-	Entity* ent;
+	Entity* ent = nullptr;
 
 };

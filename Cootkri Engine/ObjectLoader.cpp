@@ -199,7 +199,7 @@ bool ObjectLoader::ParseFace(const std::vector<std::string>& args, std::vector<O
 	}
 
 	Object& obj = data.back();
-	unsigned int end = vertices.size() - 1;
+	unsigned int end = (unsigned int)vertices.size() - 1;
 
 	obj.indices.push_back(end);
 	obj.indices.push_back(end - 1);

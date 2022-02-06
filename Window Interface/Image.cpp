@@ -15,9 +15,8 @@ typedef UIElement::Vertex Vertex;
 static std::vector<std::vector<Vertex>> g_vertices;
 static std::vector<unsigned int> g_indices;
 
-static std::vector<GLuint> VAO;
-static std::vector<GLuint> VBO;
-static std::vector<GLuint> EBO;
+static std::vector<GLuint> VAO, VBO, EBO;
+static GLuint VAO_FS, VBO_FS, EBO_FS;
 
 Image::Image() {
 
@@ -66,7 +65,10 @@ Texture Image::getTexture() {
 }
 
 void Image::draw(void* shd) {
-
+	if (isStatic) {
+		drawStatic();
+		return;
+	}
 	UIShader& shader = *(UIShader*)shd;
 	shader.setTint(tint);
 	shader.setTransMatrix(getMatrix());
@@ -78,7 +80,7 @@ void Image::draw(void* shd) {
 
 void Image::drawStatic() {
 
-	glBindVertexArray(VAO[(int)ORIGIN::CENTER]);
+	glBindVertexArray(VAO_FS);
 	glDrawElements(GL_TRIANGLES, (GLsizei)g_indices.size(), GL_UNSIGNED_INT, 0);
 
 }
@@ -101,6 +103,8 @@ void Image::prepareVertexArray() {
 			}
 			g_vertices.push_back(newVerts);
 		}
+
+		createFullscreenMesh();
 
 		VAO.resize(g_vertices.size());
 		VBO.resize(g_vertices.size());
@@ -125,4 +129,34 @@ void Image::prepareVertexArray() {
 		}
 
 	}
+
+}
+
+void Image::createFullscreenMesh() {
+
+	std::vector<Vertex>& base = g_vertices[(unsigned int)UIElement::ORIGIN::CENTER];
+	std::vector<Vertex> newVerts;
+
+	for (unsigned int i = 0; i < base.size(); ++i) {
+		Vertex vert = base[i];
+		vert.position *= 2.0f;
+		newVerts.push_back(vert);
+	}
+
+	glGenVertexArrays(1, &VAO_FS);
+	glGenBuffers(1, &VBO_FS);
+	glGenBuffers(1, &EBO_FS);
+	glBindVertexArray(VAO_FS);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO_FS);
+	glBufferData(GL_ARRAY_BUFFER, newVerts.size() * sizeof(Vertex), &newVerts[0], GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_FS);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, g_indices.size() * sizeof(GLuint), &g_indices[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, position));
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texCoord));
+
 }

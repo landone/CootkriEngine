@@ -78,7 +78,7 @@ void Text::customDraw(Renderer* render, void* data) {
 	shader.setViewMatrix(glm::mat4(1));
 
 	shader.setTint(1, 1, 1);
-	trans.setScale(glm::vec3(2.0f / len, 2, 1));
+	trans.setScale(glm::vec3(1.0f / len, 1, 1));
 	for (int i = 0; i < len; ++i) {
 		char c = me.contents[i];
 		//Select correct character from image
