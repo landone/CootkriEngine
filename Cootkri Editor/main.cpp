@@ -62,20 +62,25 @@ int main() {
 	ent.addComponent(mdl);
 	Transform& trans = ent.getTrans();
 	trans.setScale(glm::vec3(0.5f, 0.5f, 0.5f));
-	trans.setPos(glm::vec3(0, -0.5, -0.5));
+	trans.setPos(glm::vec3(0, 0, -0.5));
 
 	geomRender.add(&ent);
 	geomRender.add(&ent2);
 	geomRender.setClearColor(glm::vec4(0, 0, 0, 0));
-	geomRender.setSize(glm::vec2(1600, 900));
-
-	lightRender.setSize(glm::vec2(1600, 900));
 
 	uiRender.setClearColor(glm::vec4(0, 0.3, 0.3, 1));
 
+	Text text("test");
+	uiRender.add(&text);
+
+	//Make renderers corect size
+	disp.refreshScreenSize();
+
+	trans.setRot(glm::vec3(0, 3.1415f, 0));
 	while (disp.isOpen()) {
 		disp.poll();
-		trans.rotate(glm::vec3(0, 3.1415f / 360.0f, 0));
+		text.setText(std::to_string((int)disp.getFPS()));
+		trans.rotate(glm::vec3(0, 3.1415f * disp.getDelta(), 0));
 		geomRender.draw();
 		lightShader->setCameraPos(cam.getEntity()->getTrans().getPos());
 		lightShader->setLight(light);

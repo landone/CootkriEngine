@@ -21,6 +21,8 @@ public:
 	/// <param name="geomShader"></param>
 	void draw(void* geomShader) override;
 
+	std::string getClassname() override { return "model"; }
+
 private:
 
 	Mesh mesh;

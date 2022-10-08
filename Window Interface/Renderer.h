@@ -13,7 +13,7 @@ public:
 
 	Renderer(Shader*, EventManager* parent = nullptr, Display* display = nullptr);
 	~Renderer();
-
+	
 	/// <summary>
 	/// Set shader to use for drawing elements.
 	/// </summary>

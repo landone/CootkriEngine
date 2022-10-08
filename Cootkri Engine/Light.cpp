@@ -1,6 +1,6 @@
 #include "Light.h"
 
-Light::Light() {
+Light::Light() : Component(getClassname()) {
 
 	isChanged = true;
 

@@ -24,6 +24,8 @@ static std::map<Uint32, Display*> windowMap;
 //System cursor array
 static SDL_Cursor* systemCursors[(int)CURSORTYPE::NUM_CURSORS] = { nullptr };
 static Display* mainDisplay = nullptr;
+static float framesPerSecond = 0.0f;
+static float delta = 0.0f;
 
 Display::Display() : Display(DEFAULT_SIZE[0], DEFAULT_SIZE[1], DEFAULT_NAME) {}
 
@@ -164,6 +166,15 @@ void Display::setFullscreen(bool toggle) {
 	SDL_SetWindowFullscreen((SDL_Window*)window, toggle ? SDL_WINDOW_FULLSCREEN : 0);
 }
 
+void Display::refreshScreenSize() {
+
+	int w, h;
+	SDL_GetWindowSize((SDL_Window*)window, &w, &h);
+	DisplayResizeEvent evt(w, h);
+	this->sendEvent(&evt);
+
+}
+
 void Display::setSize(int w, int h) {
 
 	w = abs(w);
@@ -171,6 +182,8 @@ void Display::setSize(int w, int h) {
 	SDL_SetWindowSize((SDL_Window*)window, w, h);
 	MAKE_CURRENT();
 	glViewport(0, 0, w, h);
+	DisplayResizeEvent evt(w, h);
+	this->sendEvent(&evt);
 
 }
 
@@ -290,12 +303,26 @@ void Display::poll() {
 
 	//Update time & send frame event to all displays
 	static clock_t lastFrame = clock();
-	DisplayFrameEvent evt((float)(clock() - lastFrame) / CLOCKS_PER_SEC);
+	delta = (float)(clock() - lastFrame) / CLOCKS_PER_SEC;
+	framesPerSecond = 1.0f / delta;
+	DisplayFrameEvent evt(delta);
 	lastFrame = clock();
 	std::map<Uint32, Display*>::iterator it = windowMap.begin();
 	for (; it != windowMap.end(); ++it) {
 		it->second->sendEvent(&evt);
 	}
+
+}
+
+float Display::getFPS() {
+
+	return framesPerSecond;
+
+}
+
+float Display::getDelta() {
+
+	return delta;
 
 }
 

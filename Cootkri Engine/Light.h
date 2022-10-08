@@ -19,6 +19,8 @@ public:
 
 	float getIntensity();
 
+	std::string getClassname() override { return "light"; }
+
 private:
 
 	bool isChanged;

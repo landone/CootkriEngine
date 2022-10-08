@@ -62,6 +62,12 @@ public:
 	glm::vec2 getSize();
 	//Get relative screen space boundaries
 	glm::vec2 getScreenSpace();
+	//Send a screen size change event w/o changing size
+	void refreshScreenSize();
+	//Current rate of frames per second
+	static float getFPS();
+	//Time that has passed for this frame
+	static float getDelta();
 
 	//Is display currently open
 	bool isOpen();
@@ -72,8 +78,8 @@ private:
 
 	void* glContext = nullptr;
 	void* window = nullptr;
-	//Not in pixels, but screen coordinates
-	float screenWidth = 2.0f;
+	
+	float screenWidth = 2.0f;//Not in pixels, but screen coordinates
 	glm::vec2 pxToScreen = glm::vec2(1,1);
 
 	//Convert raw window coordinates to screen coordinates

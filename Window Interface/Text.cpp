@@ -58,7 +58,7 @@ void Text::drawText() {
 
 	textRender->add((Drawable*)this);
 	textRender->addTexture(texture);
-	textRender->setClearColor(glm::vec4(1, 0, 0, 1));
+	textRender->setClearColor(glm::vec4(0, 0, 0, 0));
 	textRender->setSize(dim);
 	textRender->draw(customDraw, this);
 	textRender->removeTexture(texture);

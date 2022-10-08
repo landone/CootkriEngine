@@ -19,6 +19,8 @@ public:
 
 	void preDraw(void*) override;
 
+	std::string getClassname() override { return "camera"; }
+
 private:
 
 	float near = 0.001f;

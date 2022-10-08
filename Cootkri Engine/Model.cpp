@@ -2,7 +2,7 @@
 
 #include "GeometryShader.h"
 
-Model::Model(std::string pathway) {
+Model::Model(std::string pathway) : Component(getClassname()) {
 
 	isDrawable = mesh.Load(pathway);
 
